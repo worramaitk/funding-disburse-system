@@ -11,24 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            // $table->string('name');
-
-            // $table->timestamp('email_verified_at')->nullable();
-            // $table->string('password')->nullable();
-            $table->string('username')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('staff_id')->nullable();
-            $table->string('email')->unique();
-            $table->string('campus_id')->nullable();
-            $table->string('fac_id')->nullable();
-            $table->string('dept_id')->nullable();
-            $table->string('pos_id')->nullable();
-
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 
@@ -37,6 +21,17 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->nullable();
+            $table->string('psu_id')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('staff_id')->nullable();
+            $table->string('campus_id')->nullable();
+            $table->string('fac_id')->nullable();
+            $table->string('dept_id')->nullable();
+            $table->string('pos_id')->nullable();
+
+        });
     }
 };

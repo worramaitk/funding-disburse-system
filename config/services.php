@@ -30,5 +30,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'psu' => [
+        'client_id' => 'f577ed41e0de903b1f75407fdc7b3361b4940d5c',
+        'client_secret' => 'VA0GjXWiHQK1yQdOGhzLl0cWBsIQhdN2CMxLyiT6XtUk9WYE3m',
+        'redirect' => 'http://localhost:8000/auth/psu/callback'
+    ]
 ];
