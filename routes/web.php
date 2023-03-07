@@ -25,6 +25,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/auth/psu', [App\Http\Controllers\PsuAuthController::class,'redirect'])->name('PsuPassport');
 Route::get('/auth/psu/callback', [App\Http\Controllers\PsuAuthController::class,'callbackPsu'])->name('PsuPassport');
 
+//Routes for testing purposes.
 Route::get('/test/home', function(){
     return redirect('/home');
+});
+
+Route::get('/test/tailwind', function(){
+    return view('tailwindtest');
 });

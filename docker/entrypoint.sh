@@ -17,12 +17,12 @@ fi
 role=${CONTAINER_ROLE:-app}
 
 if [ "$role" = "app" ]; then
-    php artisan migrate:fresh #https://youtu.be/ImtZ5yENzgE?t=3295
+    php artisan migrate #https://youtu.be/ImtZ5yENzgE?t=3295
     php artisan key:generate
     php artisan cache:clear
     #php artisan config:clear
-    php artisan config:cache #&&  php artisan config:clear &&  composer dump-autoload -o
-    php artisan route:clear
+    #down temp to speed up debugging php artisan config:cache #&&  php artisan config:clear &&  composer dump-autoload -o
+    #down temp to speed up debugging php artisan route:clear
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
     exec docker-php-entrypoint "$@"
 elif [ "$role" = "queue" ]; then
@@ -33,5 +33,7 @@ elif [ "$role" = "websocket" ]; then
     php artisan websockets:serve
 fi
 
-npm install 
-npm run dev
+    #npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+    npm install 
+    npm run watch

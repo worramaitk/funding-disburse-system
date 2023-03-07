@@ -23,6 +23,9 @@ ENTRYPOINT [ "docker/entrypoint.sh" ]
 #  node
 FROM node:14-alpine as node
 
+RUN apk add --no-cache bash
+
+RUN npm install -g live-server --no-progress
 WORKDIR /var/www
 COPY . .
 
