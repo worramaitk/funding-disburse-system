@@ -27,6 +27,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                <a class="nav-link" href="{{ url('/auth/logout') }}">{{ __('Click here to logout') }}</a>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
@@ -36,6 +38,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

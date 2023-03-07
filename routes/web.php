@@ -25,6 +25,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/auth/psu', [App\Http\Controllers\PsuAuthController::class,'redirect'])->name('PsuPassport');
 Route::get('/auth/psu/callback', [App\Http\Controllers\PsuAuthController::class,'callbackPsu'])->name('PsuPassport');
 
+Route::group(['middleware' => ['auth']], function() {
+    /**
+    * Logout Route
+    */
+    Route::get('/auth/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
+ });
+
 //Routes for testing purposes.
 Route::get('/test/home', function(){
     return redirect('/home');

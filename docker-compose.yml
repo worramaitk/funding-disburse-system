@@ -1,3 +1,6 @@
+# This file is based on https://github.com/emad-zaamout/Laravel-Complete-Dockerization/blob/main/docker-compose.yml 
+# however I don't use either Websocket or node so I comment out those two containers 
+
 version: "3.8"
 services:
 
@@ -19,9 +22,6 @@ services:
         depends_on:
             - database
             - redis
-
-    # This file is based on https://github.com/emad-zaamout/Laravel-Complete-Dockerization/blob/main/docker-compose.yml 
-    # however I don't use either Websocket or node so I comment out those two containers 
 
     # PHP Service
     # websocket:
