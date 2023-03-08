@@ -32,3 +32,5 @@ class LogoutController extends Controller
         return redirect('/');
     }
 }
+
+//code from https://codeanddeploy.com/blog/laravel/laravel-8-logout-for-your-authenticated-user

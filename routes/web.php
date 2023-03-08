@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('', function(){
+    return redirect('/home');
 });
-
 
 Auth::routes();
 
 //home routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home/upload-files', [App\Http\Controllers\HomeController::class, 'upload-file'])->name('upload-file');
-Route::get('/home/list-files', [App\Http\Controllers\HomeController::class, 'list-files'])->name('home');
+
+Route::get('/home/uploadfiles', [App\Http\Controllers\HomeController::class, 'uploadfile'])->name('upload-file');
+Route::get('/home/listfiles', [App\Http\Controllers\HomeController::class, 'listfiles'])->name('home');
 
 //auth routes
 Route::get('/auth/psu', [App\Http\Controllers\PsuAuthController::class,'redirect'])->name('PsuPassport');
@@ -31,10 +31,6 @@ Route::get('/auth/psu/callback', [App\Http\Controllers\PsuAuthController::class,
 Route::get('/auth/logout', [App\Http\Controllers\LogoutController::class,'perform'])->name('logout.perform');
 
 //test routes for testing purposes.
-Route::get('/test/home', function(){
-    return redirect('/home');
-});
-
 Route::get('/test/tailwind', function(){
     return view('tailwindtest');
 });
