@@ -17,7 +17,7 @@ fi
 role=${CONTAINER_ROLE:-app}
 
 if [ "$role" = "app" ]; then
-    php artisan migrate #https://youtu.be/ImtZ5yENzgE?t=3295
+    php artisan migrate:fresh #https://youtu.be/ImtZ5yENzgE?t=3295
     php artisan key:generate
     php artisan cache:clear
     #php artisan config:clear
@@ -32,8 +32,3 @@ elif [ "$role" = "websocket" ]; then
     echo "Running the websocket server ... "
     php artisan websockets:serve
 fi
-
-    #npm install -D tailwindcss postcss autoprefixer
-    npx tailwindcss init -p
-    npm install 
-    npm run watch

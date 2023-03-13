@@ -21,9 +21,9 @@ Auth::routes();
 
 //home routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/home/uploadfiles', [App\Http\Controllers\HomeController::class, 'uploadfile'])->name('upload-file');
-Route::get('/home/listfiles', [App\Http\Controllers\HomeController::class, 'listfiles'])->name('home');
+Route::get('/home/uploadfiles', [App\Http\Controllers\FileController::class, 'createForm'])->name('upload-file');
+Route::post('/home/uploadfiles', [App\Http\Controllers\FileController::class, 'fileUpload'])->name('fileUpload');
+Route::get('/home/listfiles', [App\Http\Controllers\FileController::class, 'listfiles']);
 
 //auth routes
 Route::get('/auth/psu', [App\Http\Controllers\PsuAuthController::class,'redirect'])->name('PsuPassport');

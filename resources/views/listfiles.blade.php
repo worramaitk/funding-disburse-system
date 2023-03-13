@@ -33,9 +33,9 @@
         </div>
         <!-- Menu Items -->
         <div class="hidden space-x-6 md:flex">
-            <a><button class="rounded-full p-2 bg-blue-800 text-blue-200 ">Home</button> </a>
+            <a href="{{ url('/home') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Home</button> </a>
             <a href="{{ url('/home/uploadfiles') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Upload files</button> </a>
-            <a href="{{ url('/home/listfiles') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Files Uploaded</button> </a>
+            <a><button class="rounded-full p-2 bg-blue-800 text-blue-200 ">Files Uploaded</button> </a>
             <a> <button class="rounded-full p-2 bg-transparent text-white"> <a id = "currentTimeJs" class=" text-white"></a> </button> </a>
             @if (Route::has('login'))
                 @auth
@@ -65,9 +65,9 @@
           id="menu"
           class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-gray-800 sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
         >
-          <a class=" text-blue-200 ">Home</a>
+            <a href="{{ url('/home') }}" class=" text-white">Home</a>
           <a href="{{ url('/home/uploadfiles') }}"  class=" text-white">Upload files</a>
-          <a href="{{ url('/home/listfiles') }}" class=" text-white">Files Uploaded</a>
+          <a class=" text-blue-200 ">Files Uploaded</a>
           <a id = "currentTimeJs" class=" text-white"></a>
           @if (Route::has('login'))
             @auth
@@ -83,9 +83,46 @@
 
     <!-- Hero Section -->
     <section id="hero">
-      <div class="text-center text-sm text-gray-100 dark:text-gray-900">
-          สร้างด้วย Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-      </div>
+        <div class="container">
+
+
+
+            <br />
+
+
+
+            <h1 class="text-center text-primary">Uploaded Files</h1>
+
+
+
+            <br />
+
+
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>file_path</th>
+                            <th>username</th>
+                            <th>amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $row)
+                            <tr>
+                                <td>{{ $row->name }}</td>
+
+                                <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td>
+                                <td>{{ $row->username }}</td>
+                                <td>{{ $row->amount }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 
     <!-- <script src="js/script.js"></script> -->

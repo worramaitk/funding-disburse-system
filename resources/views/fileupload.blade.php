@@ -10,13 +10,13 @@
     <title>Landing Page</title>
 
     <script>
-      var currentdate = new Date();
-      var currentTimeVar = currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
+      var currentdate = new Date(); 
+      var currentTimeVar = currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds() + " "
                 + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/"
-                + currentdate.getFullYear() + "";
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + "";  
 
       document.getElementById("currentTimeJs").innerHTML = currentTimeVar;
     </script>
@@ -30,16 +30,16 @@
         <div class="p-2 flex">
           <img class="object-scale-down h-10 bg-white" src="{{ asset('img/logo01.png') }}" alt="" />
           <button class="rounded-full p-2 bg-transparent text-white">ระบบเบิกจ่ายเงินรายวิชาโครงงาน คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</button>
-        </div>
-        <!-- Menu Items -->
+        </div> 
+        <!-- Menu Items --> 
         <div class="hidden space-x-6 md:flex">
-            <a><button class="rounded-full p-2 bg-blue-800 text-blue-200 ">Home</button> </a>
-            <a href="{{ url('/home/uploadfiles') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Upload files</button> </a>
+            <a href="{{ url('/home') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Home</button> </a>
+            <a><button class="rounded-full p-2 bg-blue-800 text-blue-200 ">Upload files</button> </a>
             <a href="{{ url('/home/listfiles') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Files Uploaded</button> </a>
             <a> <button class="rounded-full p-2 bg-transparent text-white"> <a id = "currentTimeJs" class=" text-white"></a> </button> </a>
             @if (Route::has('login'))
                 @auth
-                    <button class="rounded-full p-2 bg-blue-800 text-blue-200 "">Logged in as: {{ Auth::user()->username }}</button>
+                    <button class="rounded-full p-2 bg-blue-800 text-blue-200 "">Logged in as: {{ Auth::user()->username }}</button> 
                     <a href="{{ url('/auth/logout') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Log out</button> </a>
                 @else
                     <a href="{{ url('/auth/psu') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Log in with PSU Passport</button> </a>
@@ -65,13 +65,13 @@
           id="menu"
           class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-gray-800 sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
         >
-          <a class=" text-blue-200 ">Home</a>
-          <a href="{{ url('/home/uploadfiles') }}"  class=" text-white">Upload files</a>
+          <a href="{{ url('/home') }}"  class=" text-white">Home</a>
+          <a class=" text-blue-200 ">Upload files</a>
           <a href="{{ url('/home/listfiles') }}" class=" text-white">Files Uploaded</a>
           <a id = "currentTimeJs" class=" text-white"></a>
           @if (Route::has('login'))
             @auth
-                <a class=" text-blue-200">Logged in as: {{ Auth::user()->username }}</a>
+                <a class=" text-blue-200">Logged in as: {{ Auth::user()->username }}</a> 
                 <a href="{{ url('/auth/logout') }}" class=" text-white" >Log out</a>
             @else
                 <a href="{{ url('/auth/psu') }}" class=" text-white" > Log in with PSU Passport</a>
@@ -83,8 +83,33 @@
 
     <!-- Hero Section -->
     <section id="hero">
-      <div class="text-center text-sm text-gray-100 dark:text-gray-900">
-          สร้างด้วย Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+      <div class="container mt-5">
+          <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
+            <h3 class="text-center mb-5">Upload File</h3>
+              @csrf
+              @if ($message = Session::get('success'))
+              <div class="alert alert-success">
+                  <strong>{{ $message }}</strong>
+              </div>
+            @endif
+            @if (count($errors) > 0)
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+            @endif
+              <div class="custom-file">
+                  <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                  <label class="custom-file-label" for="chooseFile">Select file</label>
+                  <br>
+                  <label for="amount">Amount of money for this receipt:</label>
+                  <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
+              </div>
+              <button type="submit" name="submit" class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Upload Files</button> 
+          </form>
       </div>
     </section>
 
