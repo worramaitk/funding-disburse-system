@@ -10,17 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PsuAuthController extends Controller
 {
 
     public function redirect(){
-        $client_id                = Config::get('oauthpsu.client_id');
-        $client_secret            = Config::get('oauthpsu.client_secret');
-        $redirect_uri             = Config::get('oauthpsu.redirect_uri');
-        $oauth_authorize_url      = Config::get('oauthpsu.oauth_authorize_url');
-        $oauth_token_url          = Config::get('oauthpsu.oauth_token_url');
-        $userinfo_endpoint_url    = Config::get('oauthpsu.userinfo_endpoint_url');
+        $client_id                = Config::get('oauthpsu.client_id');                //
+        $redirect_uri             = Config::get('oauthpsu.redirect_uri');             //
+        $oauth_authorize_url      = Config::get('oauthpsu.oauth_authorize_url');      //
         header('location: '.$oauth_authorize_url.'?client_id='.$client_id.'&redirect_uri='.$redirect_uri.'&response_type=code&state='.md5(date('Y-m-d H:i:s')));
         die();
     }
@@ -36,32 +34,30 @@ class PsuAuthController extends Controller
         $code = $_REQUEST['code'];
         //$request->get('code');
         $ch = curl_init();
-        
+
         curl_setopt($ch, CURLOPT_URL, $oauth_token_url);
-        
+
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        
-        
-        
+
+
+
         /** Authorize Code */
-        
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        
+
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-        'code' => $code,
-        'client_id' => $client_id,
-        'client_secret' => $client_secret,
-        'redirect_uri' => $redirect_uri,
-        'grant_type' => 'authorization_code'
+            'code' => $code,
+            'client_id' => $client_id,
+            'client_secret' => $client_secret,
+            'redirect_uri' => $redirect_uri,
+            'grant_type' => 'authorization_code'
         ));
-        
+
         $userinfo = '';
         $data = curl_exec($ch);
-        
-        $username_psu = '';
-        
+
         $access_token=json_decode($data)->access_token;
         /** Get User Information */
         $authorization = "Authorization: Bearer ".$access_token;
@@ -74,10 +70,13 @@ class PsuAuthController extends Controller
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $userinfo= curl_exec($ch);
         curl_close($ch);
-        
+
+        // `error_log('message here.');` produces ` WARN  message here.` in the terminal
+        // code from https://stackoverflow.com/questions/42324438/how-to-print-messages-on-console-in-laravel
+        error_log('message here.');
+        error_log($userinfo);
         $user_object = json_decode($userinfo);
 
-        //$psu_user = Socialite::driver('psu')->user();
         $user = User::where('username',$user_object->username)->first();
 
         if(!$user){
@@ -103,5 +102,14 @@ class PsuAuthController extends Controller
             return redirect('/home');
         }
 
+    }
+
+    public function logout()
+    {
+        Session::flush();
+
+        Auth::logout();
+
+        return redirect('/');
     }
 }
