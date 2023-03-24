@@ -134,10 +134,12 @@
 </div>
 </main>
 
+<!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
 <footer class="footer mt-auto py-3 bg-light">
-<div class="container">
-    <span class="text-muted">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</span>
-</div>
+    <div class="container">
+        <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
+        <p class="float-end"><a href="https://oauth2.eng.psu.ac.th/policies/privacy">นโยบายความเป็นส่วนตัว</a> <a href="https://oauth2.eng.psu.ac.th/policies/terms">ข้อกำหนดในการให้บริการ</a></p>
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
