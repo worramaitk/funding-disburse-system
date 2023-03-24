@@ -1,118 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- code based on https://www.youtube.com/watch?v=dFgzHOX84xQ&ab_channel=TraversyMedia -->
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--  <link rel="stylesheet" href="css/main.css" /> -->
-    @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
-    <title>Landing Page</title>
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.108.0">
+    <title>Home</title>
 
-    <script>
-      var currentdate = new Date(); 
-      var currentTimeVar = currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds() + " "
-                + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + "";  
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/">
 
-      document.getElementById("currentTimeJs").innerHTML = currentTimeVar;
-    </script>
-  </head>
-  <body class="bg-white dark:bg-gray-800">
-    <!-- Navbar -->
-    <nav class="width:100% mx-auto p-2 bg-black dark:bg-black">
-      <!-- Flex container -->
-      <div class="flex items-center justify-between">
-        <!-- Logo -->
-        <div class="p-2 flex">
-          <img class="object-scale-down h-10 bg-white" src="{{ asset('img/logo01.png') }}" alt="" />
-          <button class="rounded-full p-2 bg-transparent text-white">ระบบเบิกจ่ายเงินรายวิชาโครงงาน คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</button>
-        </div> 
-        <!-- Menu Items --> 
-        <div class="hidden space-x-6 md:flex">
-            <a href="{{ url('/home') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Home</button> </a>
-            <a><button class="rounded-full p-2 bg-blue-800 text-blue-200 ">Upload files</button> </a>
-            <a href="{{ url('/home/listfiles') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Files Uploaded</button> </a>
-            <a> <button class="rounded-full p-2 bg-transparent text-white"> <a id = "currentTimeJs" class=" text-white"></a> </button> </a>
-            @if (Route::has('login'))
-                @auth
-                    <button class="rounded-full p-2 bg-blue-800 text-blue-200 "">Logged in as: {{ Auth::user()->username }}</button> 
-                    <a href="{{ url('/auth/logout') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Log out</button> </a>
-                @else
-                    <a href="{{ url('/auth/psu') }}" > <button class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Log in with PSU Passport</button> </a>
-                @endauth
-            @endif
-        </div>
-        <!-- Button -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Hamburger Icon -->
-        <button
-          id="menu-btn"
-          class="block hamburger pr-2 md:hidden focus:outline-none"
-        >
-          <span class="hamburger-top"></span>
-          <span class="hamburger-middle"></span>
-          <span class="hamburger-bottom"></span>
-        </button>
-      </div>
+{{-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
-      <!-- Mobile Menu -->
-      <div class="md:hidden">
-        <div
-          id="menu"
-          class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-gray-800 sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
-        >
-          <a href="{{ url('/home') }}"  class=" text-white">Home</a>
-          <a class=" text-blue-200 ">Upload files</a>
-          <a href="{{ url('/home/listfiles') }}" class=" text-white">Files Uploaded</a>
-          <a id = "currentTimeJs" class=" text-white"></a>
-          @if (Route::has('login'))
+    <style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+        }
+    }
+
+    .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column h-100">
+
+<header>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+    <a class="navbar-brand">ระบบเบิกจ่ายเงิน รายวิชาโครงงาน</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" >Upload new file</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/home/listfiles') }}">Files Uploaded</a>
+        </li>
+        </ul>
+
+
+        <form class="d-flex" role="search">
             @auth
-                <a class=" text-blue-200">Logged in as: {{ Auth::user()->username }}</a> 
-                <a href="{{ url('/auth/logout') }}" class=" text-white" >Log out</a>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li>
+                        <a class="nav-link disabled">Current user: {{ Auth::user()->username }}</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('/auth/logout') }}">Log out</a>
+                    </li>
+                </ul>
             @else
-                <a href="{{ url('/auth/psu') }}" class=" text-white" > Log in with PSU Passport</a>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li>
+                        <a class="nav-link" href="{{ url('/auth/psu') }}">Log in with PSU passport</a>
+                    </li>
+                </ul>
             @endauth
-        @endif
-        </div>
-      </div>
-    </nav>
+        </form>
+    </div>
+    </div>
+</nav>
+</header>
 
-    <!-- Hero Section -->
-    <section id="hero">
-      <div class="container mt-5">
-          <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
-            <h3 class="text-center mb-5">Upload File</h3>
-              @csrf
-              @if ($message = Session::get('success'))
-              <div class="alert alert-success">
-                  <strong>{{ $message }}</strong>
-              </div>
-            @endif
-            @if (count($errors) > 0)
-              <div class="alert alert-danger">
-                  <ul>
-                      @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                      @endforeach
-                  </ul>
-              </div>
-            @endif
-              <div class="custom-file">
-                  <input type="file" name="file" class="custom-file-input" id="chooseFile">
-                  <label class="custom-file-label" for="chooseFile">Select file</label>
-                  <br>
-                  <label for="amount">Amount of money for this receipt:</label>
-                  <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
-              </div>
-              <button type="submit" name="submit" class="rounded-full p-2 bg-gray-800 hover:bg-red-800 text-white">Upload Files</button> 
-          </form>
-      </div>
-    </section>
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    <div class="container mt-5">
+        <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
+          <h3 class="text-center mb-5"><br> Upload File</h3>
+            @csrf
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <strong>{{ $message }}</strong>
+            </div>
+          @endif
+          @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+          @endif
+            <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                <label class="custom-file-label" for="chooseFile">Select file</label>
+                <br>
+                <label for="amount">Amount of money for this receipt:</label>
+                <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Upload Files</button>
+        </form>
+    </div>
+</main>
 
-    <!-- <script src="js/script.js"></script> -->
-  </body>
+<footer class="footer mt-auto py-3 bg-light">
+<div class="container">
+    <span class="text-muted">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</span>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+</body>
 </html>

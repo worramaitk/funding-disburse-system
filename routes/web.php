@@ -26,6 +26,6 @@ Route::post('/home/uploadfiles',    [App\Http\Controllers\FileController::class,
 Route::get('/home/listfiles',       [App\Http\Controllers\FileController::class, 'listfiles' ]);
 
 //auth routes
-Route::get('/auth/psu',             [App\Http\Controllers\PsuAuthController::class,'redirect'])->name('PsuPassport');
-Route::get('/auth/psu/callback',    [App\Http\Controllers\PsuAuthController::class,'callbackPsu'])->name('PsuPassport');
-Route::get('/auth/logout',          [App\Http\Controllers\PsuAuthController::class,'logout'])->name('logout.perform');
+Route::get('/auth/psu',             [App\Http\Controllers\PsuAuthController::class,'redirect'    ])->name('PsuPassport');
+Route::get('/auth/psu/callback',    [App\Http\Controllers\PsuAuthController::class,'callbackPsu' ])->name('PsuPassport');
+Route::get('/auth/logout',          [App\Http\Controllers\PsuAuthController::class,'logout'      ])->name('logout.perform');

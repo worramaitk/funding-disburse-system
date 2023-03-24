@@ -32,7 +32,7 @@ class FileController extends Controller
         $fileModel = new File;
         if($req->file()) {
             $fileName = time().'_'.$req->file->getClientOriginalName();
-            $filePath = $req->file('file'); //->storeAs('uploads', $fileName, 'public');
+            $filePath = $req->file('file')->move('assets',$fileName); //->storeAs('uploads', $fileName, 'public');
             Storage::disk('local')->put($req->file('file') , 'public');
             $fileModel->name = time().'_'.$req->file->getClientOriginalName();
             $fileModel->file_path = '/storage/' . $filePath;
@@ -48,7 +48,10 @@ class FileController extends Controller
 
     public function listfiles()
     {
-        $data = File::get(['name', 'file_path', 'username', 'amount']);
+        // $data = File::get(['name', 'file_path', 'username', 'amount']);
+
+        $data = File::all();
+
     	// $data = File::join('state', 'state.country_id', '=', 'country.country_id')
         // ->join('city', 'city.state_id', '=', 'state.state_id')
         // ->get(['country.country_name', 'state.state_name', 'city.city_name']);
