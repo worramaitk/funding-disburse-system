@@ -87,7 +87,7 @@
             <a class="nav-link" href="{{ url('/home') }}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" >Upload new file</a>
+            <a class="nav-link active" aria-current="page">Upload new file</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/home/listfiles') }}">Files Uploaded</a>
@@ -142,6 +142,9 @@
                 <input type="file" name="file" class="custom-file-input" id="chooseFile">
                 <label class="custom-file-label" for="chooseFile">Select file</label>
                 <br>
+                <label for="amount">File name (optional):</label>
+                <input type="text" id="name" name="name" class="border-gray-500 border-2" value="0" >
+                <br>
                 <label for="amount">Amount of money for this receipt:</label>
                 <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
             </div>
@@ -150,10 +153,12 @@
     </div>
 </main>
 
+<!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
 <footer class="footer mt-auto py-3 bg-light">
-<div class="container">
-    <span class="text-muted">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</span>
-</div>
+    <div class="container">
+        <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
+        <p class="float-end"><a href="https://oauth2.eng.psu.ac.th/policies/privacy">นโยบายความเป็นส่วนตัว</a> <a href="https://oauth2.eng.psu.ac.th/policies/terms">ข้อกำหนดในการให้บริการ</a></p>
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

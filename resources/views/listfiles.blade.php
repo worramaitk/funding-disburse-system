@@ -92,7 +92,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page">Home</a>
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/home/uploadfiles') }}">Upload new file</a>
@@ -137,20 +137,24 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>id</th>
                         <th>name</th>
-                        <th>file_path</th>
                         <th>username</th>
                         <th>amount</th>
+                        <th>view</th>
+                        <th>download</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($data as $row)
                         <tr>
+                            <td>{{ $row->id }}</td>
                             <td>{{ $row->name }}</td>
-
-                            <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td>
+                            {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
                             <td>{{ $row->username }}</td>
                             <td>{{ $row->amount }}</td>
+                            <td><a href="">View</a></td>
+                            <td><a href="{{ url('/download',$row->file_path) }}">Download {{ $row->file_path }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -159,10 +163,12 @@
     </div>
 </main>
 
+<!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
 <footer class="footer mt-auto py-3 bg-light">
-<div class="container">
-    <span class="text-muted">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</span>
-</div>
+    <div class="container">
+        <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
+        <p class="float-end"><a href="https://oauth2.eng.psu.ac.th/policies/privacy">นโยบายความเป็นส่วนตัว</a> <a href="https://oauth2.eng.psu.ac.th/policies/terms">ข้อกำหนดในการให้บริการ</a></p>
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -16,6 +16,7 @@ class FileController extends Controller
      */
     public function __construct()
     {
+        // comment that line out if https://oauth2.eng.psu.ac.th/ went down again like on 11:45 2023-03-25
         $this->middleware('auth');
     }
 
@@ -33,10 +34,15 @@ class FileController extends Controller
         if($req->file()) {
             $fileName = time().'_'.$req->file->getClientOriginalName();
             $filePath = $req->file('file')->move('assets',$fileName); //->storeAs('uploads', $fileName, 'public');
-            Storage::disk('local')->put($req->file('file') , 'public');
-            $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-            $fileModel->file_path = '/storage/' . $filePath;
-            $fileModel->username = Auth::user()->username ;
+            //Storage::disk('local')->put($req->file('file') , 'public');
+            $fileModel->name = $req->name; //time().'_'.$req->file->getClientOriginalName();
+            $fileModel->file_path = $fileName;// '/storage/' . $filePath;
+            if (Auth::user()) {
+                $fileModel->username = Auth::user()->username;
+            }
+            else {
+                $fileModel->username = "error";
+            }
             $fileModel->amount = $req->amount;
 
             $fileModel->save();
@@ -70,6 +76,11 @@ class FileController extends Controller
 
         //return view('join_table', compact('data'));
         return view('listfiles', compact('data'));
+    }
+
+    public function download(Request $request, $file)
+    {
+        return response()->download(public_path('assets/'.$file));
     }
 }
 
