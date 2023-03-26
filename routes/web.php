@@ -24,7 +24,8 @@ Route::get ('/home',                 [App\Http\Controllers\HomeController::class
 Route::get ('/home/uploadfiles',     [App\Http\Controllers\FileController::class   , 'createForm'  ])->name('upload-file');
 Route::post('/home/uploadfiles',     [App\Http\Controllers\FileController::class   , 'fileUpload'  ])->name('fileUpload');
 Route::get ('/home/listfiles',       [App\Http\Controllers\FileController::class   , 'listfiles'   ]);
-Route::get ('/download/{file_path}', [App\Http\Controllers\FileController::class   , 'download'    ]);
+Route::get ('/download/{id}',        [App\Http\Controllers\FileController::class   , 'download'    ]);
+Route::get ('/view/{id}',            [App\Http\Controllers\FileController::class   , 'viewfile'    ]);
 
 //auth routes
 Route::get ('/auth/psu',             [App\Http\Controllers\PsuAuthController::class, 'redirect'    ])->name('PsuPassport');

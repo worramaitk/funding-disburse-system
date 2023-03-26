@@ -78,9 +78,16 @@ class FileController extends Controller
         return view('listfiles', compact('data'));
     }
 
-    public function download(Request $request, $file)
+    public function download(Request $request, $id)
     {
-        return response()->download(public_path('assets/'.$file));
+        $data = File::find($id);
+        return response()->download(public_path('assets/'.$data->file_path));
+    }
+
+    public function viewfile($id)
+    {
+        $data = File::find($id);
+        return view('viewfile',compact('data'));
     }
 }
 
