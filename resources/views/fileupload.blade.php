@@ -142,8 +142,8 @@
                 <input type="file" name="file" class="custom-file-input" id="chooseFile">
                 <label class="custom-file-label" for="chooseFile">Select file</label>
                 <br>
-                <label for="amount">File name (optional):</label>
-                <input type="text" id="name" name="name" class="border-gray-500 border-2" value="0" >
+                <label for="amount">File name (if you choose to overwrite):</label>
+                <input type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
                 <br>
                 <label for="amount">Amount of money for this receipt:</label>
                 <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >

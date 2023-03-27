@@ -130,7 +130,7 @@
 <main class="flex-shrink-0">
 <div class="container">
     <h1 class="mt-5"><br>{{$data->name}}</h1>
-    <iframe src="/assets/{{ ($data->file_path) }}" ></iframe>
+    <iframe src="/assets/{{ ($data->name) }}" ></iframe>
 </div>
 </main>
 
