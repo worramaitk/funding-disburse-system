@@ -24,12 +24,17 @@ Route::get ('/home',                 [App\Http\Controllers\HomeController::class
 Route::get ('/home/uploadfiles',     [App\Http\Controllers\FileController::class   , 'createForm'  ])->name('upload-file');
 Route::post('/home/uploadfiles',     [App\Http\Controllers\FileController::class   , 'fileUpload'  ])->name('fileUpload');
 Route::get ('/home/listfiles',       [App\Http\Controllers\FileController::class   , 'listfiles'   ]);
-Route::get ('/download/{id}',        [App\Http\Controllers\FileController::class   , 'download'    ]);
-Route::get ('/view/{id}',            [App\Http\Controllers\FileController::class   , 'viewfile'    ]);
+Route::get ('/file/download/{id}',   [App\Http\Controllers\FileController::class   , 'downloadfile']);
+Route::get ('/file/serve/{id}',      [App\Http\Controllers\FileController::class   , 'servefile'   ]);
+Route::get ('/file/view/{id}',       [App\Http\Controllers\FileController::class   , 'viewfile'    ]);
+Route::get ('/home/usertest',        [App\Http\Controllers\HomeController::class   , 'user'        ])->name('home');
 
+//admin routes
+Route::get ('/admin',                [App\Http\Controllers\AdminController::class  , 'index'       ])->name('home');
 //auth routes
 Route::get ('/auth/psu',             [App\Http\Controllers\PsuAuthController::class, 'redirect'    ])->name('PsuPassport');
 Route::get ('/auth/psu/callback',    [App\Http\Controllers\PsuAuthController::class, 'callbackPsu' ])->name('PsuPassport');
 Route::get ('/auth/logout',          [App\Http\Controllers\PsuAuthController::class, 'logout'      ])->name('logout.perform');
 
+Route::post('/home/usertest',        [App\Http\Controllers\PsuAuthController::class, 'usertest'    ])->name('usertest');
 

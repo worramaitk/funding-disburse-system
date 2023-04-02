@@ -13,7 +13,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //return view('topbartest');
         return view('home');
+    }
+    public function user()
+    {
+        return view('t');
     }
 }

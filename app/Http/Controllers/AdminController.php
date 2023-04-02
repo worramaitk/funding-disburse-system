@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
@@ -16,16 +15,26 @@ class FileController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         // comment that line out if https://oauth2.eng.psu.ac.th/ went down again like on 11:45 2023-03-25
         $this->middleware('auth');
     }
 
-    public function createForm()
+    public function index()
     {
-        return view('fileupload');
+        if (Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08"){
+            return redirect('/home');
+        }
+        else {
+            return view('adminhome');
+        }
     }
+
+
+    public function createForm(){
+
+    }
+
 
     public function fileUpload(Request $req)
     {
@@ -39,45 +48,26 @@ class FileController extends Controller
             //Storage::disk('local')->put($req->file('file') , 'public');
             Log::info('name: '.var_dump($req->name));
             error_log('name: '.var_dump($req->name));
-            try{
-                error_log('message here.');
-                error_log('creating test_dir:');
 
-                Storage::makeDirectory('test_dir');
-
-                error_log('created test_dir successfully');
-            } catch (Exception $ex) {
-                // jump to this part
-                // if an exception occurred
-                error_log($ex);
-                error_log('such exception occured while creating test_dir');
-            }
             //check for possible name to be renamed
             $trimmedName = trim($req->name);
             if ($trimmedName == "") {
                 //keep file name as the original one
                 $originalFileName = $this->filter_filename($req->file->getClientOriginalName());
-                $fileName = ($originalFileName);
+                $fileName = time().'_'.($originalFileName);
             } else {
                 $originalFileExt = $this->filter_filename($req->file->getClientOriginalExtension());
-                $fileName = $trimmedName.'.'.($originalFileExt);
+                $fileName = time().'_'.$trimmedName.'.'.($originalFileExt);
             }
-            // $filePath = $req->file('file')->move('assets',$fileName);
-
+            $filePath = $req->file('file')->move('assets',$fileName);
             $fileModel->name = $fileName ; //time().'_'.$req->file->getClientOriginalName();
-
+            $fileModel->file_path = $filePath; // '/storage/' . $filePath;
             if (Auth::user()) {
-                //uploader was logged in
-                $uploader_username = Auth::user()->username;
+                $fileModel->username = Auth::user()->username;
             }
             else {
-                //uploader was not logged in
-                $uploader_username = "guest";
+                $fileModel->username = "error";
             }
-            //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
-            $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $req->file('file') , $fileName);
-            $fileModel->username = $uploader_username;
-            $fileModel->file_path = $filePath; // '/storage/' . $filePath;
             $fileModel->amount = $req->amount;
 
             //logging
@@ -119,53 +109,16 @@ class FileController extends Controller
         return view('listfiles', compact('data'));
     }
 
-    public function downloadfile(Request $request, $id)
+    public function download(Request $request, $id)
     {
         $data = File::find($id);
-        //return response()->download(public_path('assets/'.$data->file_path));
-
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return Storage::download($data->file_path);
-            } else {
-                return abort('403');
-            }
-        } else {
-            return abort('403');
-        }
-
-        // if(Auth::user() && Auth::id() === $file->user->id) {
-        //     // filename should be a relative path inside storage/app to your file like 'userfiles/report1253.pdf'
-        //     return Storage::download($file->filename);
-        // }
-    }
-
-    public function servefile($id)
-    {
-        $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return response()->file( Storage::path($data->file_path));
-            } else {
-                return abort('403');
-            }
-        } else {
-            return abort('403');
-        }
+        return response()->download(public_path('assets/'.$data->file_path));
     }
 
     public function viewfile($id)
     {
         $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return view('viewfile',compact('data'));
-            } else {
-                return abort('403');
-            }
-        } else {
-            return abort('403');
-        }
+        return view('viewfile',compact('data'));
     }
 
     //from https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename

@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.108.0">
-    <title>Home</title>
+    <title>Testing custom user</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <style>
@@ -60,11 +60,6 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
     }
-
-    main > .container {
-        padding: 60px 15px 0;
-    }
-
     </style>
 
 
@@ -83,15 +78,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('/home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('/home/uploadfiles') }}">Upload new file</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page">Files Uploaded</a>
-            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page">Upload new file</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/home/listfiles') }}">Files Uploaded</a>
+        </li>
         </ul>
 
 
@@ -99,7 +94,7 @@
             @auth
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li>
-                        <a class="nav-link disabled">Logged in as: {{ Auth::user()->username }}</a>
+                        <a class="nav-link disabled">Current user: {{ Auth::user()->username }}</a>
                     </li>
                     <li>
                         <a class="nav-link" href="{{ url('/auth/logout') }}">Log out</a>
@@ -120,38 +115,57 @@
 
 <!-- Begin page content -->
 <main class="flex-shrink-0">
-    <div class="container">
-        <br />
-        <h1 class="text-center text-primary">Uploaded Files</h1>
-        <br />
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>username</th>
-                        <th>amount</th>
-                        <th>view</th>
-                        <th>download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data as $row)
-                        <tr>
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->name }}</td>
-                            {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
-                            <td>{{ $row->username }}</td>
-                            <td>{{ $row->amount }}</td>
-                            <td><a href="{{ url('/file/view',$row->id) }}">view</a></td>
-                            <td><a href="{{ url('/file/download',$row->id) }}">download</a></td>
-                        </tr>
+    <div class="container mt-5">
+        <form action="{{route('usertest')}}" method="post" enctype="multipart/form-data">
+          <h3 class="text-center mb-5"><br>Log in as a custom user</h3>
+            @csrf
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <strong>{{ $message }}</strong>
+            </div>
+          @endif
+          @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
+                </ul>
+            </div>
+          @endif
+
+            <div class="custom-user">
+                <br>
+                <label for="amount">username:</label>
+                <input type="text" id="username" name="username" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">first_name:</label>
+                <input type="text" id="first_name" name="first_name" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">last_name:</label>
+                <input type="text" id="last_name" name="last_name" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">staff_id:</label>
+                <input type="text" id="staff_id" name="staff_id" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">email:</label>
+                <input type="text" id="email" name="email" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">campus_id:</label>
+                <input type="text" id="campus_id" name="campus_id" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">fac_id:</label>
+                <input type="text" id="fac_id" name="fac_id" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">dept_id:</label>
+                <input type="text" id="dept_id" name="dept_id" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">pos_id:</label>
+                <input type="text" id="pos_id" name="pos_id" class="border-gray-500 border-2" value="" >
+
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Log in as a custom user</button>
+        </form>
     </div>
 </main>
 
@@ -165,7 +179,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> --}}
-
 
 </body>
 </html>

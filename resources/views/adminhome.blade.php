@@ -77,20 +77,20 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-    <a class="navbar-brand">ระบบเบิกจ่ายเงิน รายวิชาโครงงาน</a>
+    <a class="navbar-brand" >ระบบเบิกจ่ายเงิน รายวิชาโครงงาน</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/home') }}">Home</a>
+                <a class="nav-link active" aria-current="page">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/home/uploadfiles') }}">Upload new file</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page">Files Uploaded</a>
+                <a class="nav-link" href="{{ url('/home/listfiles') }}">Files Uploaded</a>
             </li>
         </ul>
 
@@ -120,39 +120,11 @@
 
 <!-- Begin page content -->
 <main class="flex-shrink-0">
-    <div class="container">
-        <br />
-        <h1 class="text-center text-primary">Uploaded Files</h1>
-        <br />
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>username</th>
-                        <th>amount</th>
-                        <th>view</th>
-                        <th>download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data as $row)
-                        <tr>
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->name }}</td>
-                            {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
-                            <td>{{ $row->username }}</td>
-                            <td>{{ $row->amount }}</td>
-                            <td><a href="{{ url('/file/view',$row->id) }}">view</a></td>
-                            <td><a href="{{ url('/file/download',$row->id) }}">download</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="container">
+    <h1 class="mt-5"><br>ระบบเบิกจ่ายเงินรายวิชาโครงงาน </h1>
+    <p class="lead">สำหรับคณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
+    <p class="lead">สร้างด้วย Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
+</div>
 </main>
 
 <!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->

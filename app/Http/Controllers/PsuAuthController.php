@@ -58,6 +58,11 @@ class PsuAuthController extends Controller
         $userinfo = '';
         $data = curl_exec($ch);
 
+
+        error_log('message here.');
+        error_log('$data:');
+        error_log($data);
+
         $access_token=json_decode($data)->access_token;
         /** Get User Information */
         $authorization = "Authorization: Bearer ".$access_token;
@@ -74,6 +79,7 @@ class PsuAuthController extends Controller
         // `error_log('message here.');` produces ` WARN  message here.` in the terminal
         // code from https://stackoverflow.com/questions/42324438/how-to-print-messages-on-console-in-laravel
         error_log('message here.');
+        error_log('$userinfo:');
         error_log($userinfo);
         $user_object = json_decode($userinfo);
 
@@ -104,12 +110,31 @@ class PsuAuthController extends Controller
 
     }
 
-    public function logout()
-    {
+    public function usertest(Request $req){
+        $user = User::where('username',$req->username)->first();
+
+        if(!$user){
+            $new_user = User::create([
+                'username' => $req->username,
+                'first_name'  => $req->first_name,
+                'last_name' => $req->last_name,
+                'staff_id' => $req->staff_id,
+                'email' => $req->email,
+                'campus_id' => $req->campus_id,
+                'fac_id' => $req->fac_id,
+                'dept_id' => $req->dept_id,
+                'pos_id' => $req->pos_id,
+
+            ]);
+            Auth::login($new_user);
+            //return redirect()->intended('dashboard');
+            return redirect('/home');
+        }
+    }
+
+    public function logout(){
         Session::flush();
-
         Auth::logout();
-
         return redirect('/');
     }
 }

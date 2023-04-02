@@ -7,16 +7,8 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.108.0">
     <title>Home</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/">
-
-
-
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-{{-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -128,10 +120,23 @@
 
 <!-- Begin page content -->
 <main class="flex-shrink-0">
-<div class="container">
-    <h1 class="mt-5"><br>ระบบเบิกจ่ายเงินรายวิชาโครงงาน คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</h1>
-    <p class="lead">สร้างด้วย Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
-</div>
+    <div class="container">
+        <h1 class="mt-5"><br>ระบบเบิกจ่ายเงิน รายวิชาโครงงาน </h1>
+        <p class="lead">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
+        <p class="lead">สร้างด้วย Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="toastbtn">Show Toast</button>
+
+    <div class="toast">
+      <div class="toast-header">
+        <strong class="me-auto">Toast Header</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      </div>
+      <div class="toast-body">
+        <p>Some text insstide the toast body</p>
+      </div>
+    </div>
 </main>
 
 <!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
@@ -142,7 +147,17 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById("toastbtn").onclick = function() {
+  var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+  var toastList = toastElList.map(function(toastEl) {
+    return new bootstrap.Toast(toastEl)
+  })
+  toastList.forEach(toast => toast.show())
+  console.log("button clicked")
+}
+</script>
     {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> --}}
 
 

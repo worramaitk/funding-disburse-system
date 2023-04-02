@@ -6,17 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.108.0">
-    <title>Home</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/">
-
-
-
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-{{-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-
+    <title>View Files</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -130,7 +122,7 @@
 <main class="flex-shrink-0">
 <div class="container">
     <h1 class="mt-5"><br>{{$data->name}}</h1>
-    <iframe src="/assets/{{ ($data->name) }}" ></iframe>
+    <iframe src="/file/serve/{{$data->id}}" ></iframe>
 </div>
 </main>
 
