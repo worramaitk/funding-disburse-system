@@ -88,8 +88,6 @@ class FileController extends Controller
             return back()
             ->with('success','File has been uploaded.')
             ->with('file', $fileName);
-
-
         }
     }
 
@@ -157,19 +155,16 @@ class FileController extends Controller
     public function viewfile($id)
     {
         $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return view('viewfile',compact('data'));
-            } else {
-                return abort('403');
-            }
+        if (Auth::user()->username == $data->username) {
+            return view('viewfilebyid',compact('data'));
         } else {
             return abort('403');
         }
     }
 
     //from https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename
-    public function filter_filename($filename, $beautify=true) {
+    public function filter_filename($filename, $beautify=true)
+    {
         // sanitize filename
         $filename = preg_replace(
             '~
@@ -190,7 +185,8 @@ class FileController extends Controller
         return $filename;
     }
 
-    public function beautify_filename($filename) {
+    public function beautify_filename($filename)
+    {
         // reduce consecutive characters
         $filename = preg_replace(array(
             // "file   name.zip" becomes "file-name.zip"

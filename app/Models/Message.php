@@ -8,7 +8,7 @@ class Message extends Model
     use HasFactory;
     protected $fillable = [
         'usernamesender',
-        'usernamerecipient',
+        'usernamerecipi',
         'title',
         'text',
         'idfile',

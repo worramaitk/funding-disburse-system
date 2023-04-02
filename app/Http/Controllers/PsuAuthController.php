@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Session;
 class PsuAuthController extends Controller
 {
 
-    public function redirect(){
+    public function redirect()
+    {
         $client_id                = Config::get('oauthpsu.client_id');                //
         $redirect_uri             = Config::get('oauthpsu.redirect_uri');             //
         $oauth_authorize_url      = Config::get('oauthpsu.oauth_authorize_url');      //
@@ -23,7 +24,8 @@ class PsuAuthController extends Controller
         die();
     }
 
-    public function callbackPsu(){
+    public function callbackPsu()
+    {
         $client_id                = Config::get('oauthpsu.client_id');
         $client_secret            = Config::get('oauthpsu.client_secret');
         $redirect_uri             = Config::get('oauthpsu.redirect_uri');
@@ -57,7 +59,6 @@ class PsuAuthController extends Controller
 
         $userinfo = '';
         $data = curl_exec($ch);
-
 
         error_log('message here.');
         error_log('$data:');
@@ -98,21 +99,15 @@ class PsuAuthController extends Controller
                 'pos_id' => $user_object->pos_id,
 
             ]);
-            Auth::login($new_user);
-            //return redirect()->intended('dashboard');
-            return redirect('/home');
+            $user = $new_user;
         }
-        else{
-            Auth::login($user);
-            //return redirect()->intended('dashboard');
-            return redirect('/home');
-        }
-
+        Auth::login($user);
+        return redirect('/home');             //return redirect()->intended('dashboard');
     }
 
-    public function usertest(Request $req){
+    public function usertest(Request $req)
+    {
         $user = User::where('username',$req->username)->first();
-
         if(!$user){
             $new_user = User::create([
                 'username' => $req->username,
@@ -126,10 +121,10 @@ class PsuAuthController extends Controller
                 'pos_id' => $req->pos_id,
 
             ]);
-            Auth::login($new_user);
-            //return redirect()->intended('dashboard');
-            return redirect('/home');
+            $user = $new_user;
         }
+        Auth::login($user);
+        return redirect('/home');
     }
 
     public function logout(){
