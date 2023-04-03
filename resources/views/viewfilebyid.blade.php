@@ -1,14 +1,12 @@
+@extends('layouts.page')
 
-@extends('layouts.head')
+@section('title')
 <title>Viewing {{$data->name}}</title>
-@extends('layouts.top')
+@endsection
 
-<!-- Begin page content -->
-<main class="flex-shrink-0">
+@section('main')
 <div class="container">
     <h1 class="mt-5"><br>Viewing {{$data->name}}</h1>
     <iframe src="/file/serve/{{$data->id}}" ></iframe>
 </div>
-</main>
-
-@extends('layouts.bottom')
+@endsection

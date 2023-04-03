@@ -1,9 +1,10 @@
-@extends('layouts.head')
-<title>Your files</title>
-@extends('layouts.top')
+@extends('layouts.page')
 
-<!-- Begin page content -->
-<main class="flex-shrink-0">
+@section('title')
+<title>Your files</title>
+@endsection
+
+@section('main')
     <div class="container">
         <br />
         <h1 class="text-center text-primary">Your uploaded Files</h1>
@@ -37,6 +38,4 @@
             </table>
         </div>
     </div>
-</main>
-
-@extends('layouts.bottom')
+@endsection

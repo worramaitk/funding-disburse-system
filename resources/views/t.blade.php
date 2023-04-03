@@ -1,10 +1,10 @@
+@extends('layouts.page')
 
-@extends('layouts.head')
+@section('title')
 <title>Debug page</title>
-@extends('layouts.top')
+@endsection
 
-<!-- Begin page content -->
-<main class="flex-shrink-0">
+@section('main')
     <div class="container mt-5">
         <form action="{{route('usertest')}}" method="post" enctype="multipart/form-data">
           <h3 class="text-center mb-5"><br>Log in as a custom user</h3>
@@ -57,7 +57,5 @@
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Log in as a custom user</button>
         </form>
     </div>
-</main>
-
-@extends('layouts.bottom')
+@endsection
 

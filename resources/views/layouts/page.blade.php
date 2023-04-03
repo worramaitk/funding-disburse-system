@@ -6,9 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.108.0">
-    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    @yield('title')
     <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -131,4 +131,30 @@
         </nav>
         </header>
 
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    @yield('main')
+</main>
+        <!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์ </p>
+        <p class="float-end"><a href="https://oauth2.eng.psu.ac.th/policies/privacy">นโยบายความเป็นส่วนตัว</a> <a href="https://oauth2.eng.psu.ac.th/policies/terms">ข้อกำหนดในการให้บริการ</a></p>
+    </div>
+</footer>
 
+
+<script>
+document.getElementById("toastbtn").onclick = function() {
+  var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+  var toastList = toastElList.map(function(toastEl) {
+    return new bootstrap.Toast(toastEl)
+  })
+  toastList.forEach(toast => toast.show())
+  console.log("button clicked")
+}
+</script>
+    {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+</body>
+</html>

@@ -19,4 +19,8 @@ class HomeController extends Controller
     {
         return view('t');
     }
+    public function phpinfo()
+    {
+        return phpinfo();
+    }
 }

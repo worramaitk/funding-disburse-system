@@ -1,9 +1,10 @@
-@extends('layouts.head')
-<title>File upload</title>
-@extends('layouts.top')
+@extends('layouts.page')
 
-<!-- Begin page content -->
-<main class="flex-shrink-0">
+@section('title')
+<title>File upload</title>
+@endsection
+
+@section('main')
     <div class="container mt-5">
         <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
           <h3 class="text-center mb-5"><br> Upload File</h3>
@@ -35,6 +36,5 @@
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Upload Files</button>
         </form>
     </div>
-</main>
+@endsection
 
-@extends('layouts.bottom')

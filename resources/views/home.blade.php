@@ -1,9 +1,10 @@
-@extends('layouts.head')
-<title>Home</title>
-@extends('layouts.top')
+@extends('layouts.page')
 
-<!-- Begin page content -->
-<main class="flex-shrink-0">
+@section('title')
+<title>Home</title>
+@endsection
+
+@section('main')
     <div class="container">
         <h1 class="mt-5"><br>ระบบเบิกจ่ายเงิน รายวิชาโครงงาน </h1>
         <p class="lead">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์</p>
@@ -21,6 +22,4 @@
         <p>Some text insstide the toast body</p>
       </div>
     </div>
-</main>
-
-@extends('layouts.bottom')
+@endsection
