@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Session;
 class PsuAuthController extends Controller
 {
 
-    public function redirect()
+    public function auth()
     {
         $client_id                = Config::get('oauthpsu.client_id');                //
         $redirect_uri             = Config::get('oauthpsu.redirect_uri');             //
@@ -24,7 +24,7 @@ class PsuAuthController extends Controller
         die();
     }
 
-    public function callbackPsu()
+    public function callback()
     {
         $client_id                = Config::get('oauthpsu.client_id');
         $client_secret            = Config::get('oauthpsu.client_secret');

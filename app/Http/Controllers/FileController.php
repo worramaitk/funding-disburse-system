@@ -22,12 +22,124 @@ class FileController extends Controller
         $this->middleware('auth');
     }
 
-    public function createForm()
+    /**
+     * Return view for user to upload file
+     *
+     * @return
+     */
+    public function create()
     {
-        return view('fileupload');
+        return view('file.create');
     }
 
-    public function fileUpload(Request $req)
+    /**
+     * Delete the file , then delete its entry from the database
+     *
+     * @return
+     */
+    public function destroy($id)
+    {
+        $data = File::find($id);
+        if (Auth::user()) {
+            if (Auth::user()->username == $data->username) {
+                Storage::delete($data->file_path);
+                $data->delete();
+                return redirect('/file/create')->with('message', 'File deleted successfully');
+            } else {
+                return abort('403', 'Unauthorized Action');
+            }
+        } else {
+            return abort('403', 'Unauthorized Action');
+        }
+    }
+
+    /**
+     * download the file
+     *
+     * @return
+     */
+    public function download($id)
+    {
+        $data = File::find($id);
+
+        if (Auth::user()) {
+            if (Auth::user()->username == $data->username) {
+                return Storage::download($data->file_path);
+            } else {
+                return abort('403', 'Unauthorized Action');
+            }
+        } else {
+            return abort('403', 'Unauthorized Action');
+        }
+
+        // if(Auth::user() && Auth::id() === $file->user->id) {
+        //     // filename should be a relative path inside storage/app to your file like 'userfiles/report1253.pdf'
+        //     return Storage::download($file->filename);
+        // }
+    }
+
+    /**
+     * edit the file information
+     *
+     * @return
+     */
+    public function edit($id)
+    {
+        $data = File::find($id);
+        return view('file.edit', compact('data'));
+    }
+
+    /**
+     * list all files that that user uploaded
+     *
+     * @return
+     */
+    public function index()
+    {
+        $data = File::all();
+        return view('file.index', compact('data'));
+    }
+
+    /**
+     * shows the raw file to the user
+     *
+     * @return
+     */
+    public function serve($id)
+    {
+        $data = File::find($id);
+        if (Auth::user()) {
+            if (Auth::user()->username == $data->username) {
+                return response()->file( Storage::path($data->file_path));
+            } else {
+                return abort('403', 'Unauthorized Action');
+            }
+        } else {
+            return abort('403', 'Unauthorized Action');
+        }
+    }
+
+    /**
+     * shows the file inside iframe
+     *
+     * @return
+     */
+    public function show($id)
+    {
+        $data = File::find($id);
+        if (Auth::user()->username == $data->username) {
+            return view('file.show',compact('data'));
+        } else {
+            return abort('403', 'Unauthorized Action');
+        }
+    }
+
+    /**
+     * store the file with storage facade and add entry to database
+     *
+     * @return
+     */
+    public function store(Request $req)
     {
         $req->validate([
             'file' => 'required|max:20000'
@@ -91,75 +203,45 @@ class FileController extends Controller
         }
     }
 
-    public function listfiles()
+    /**
+     * update file information
+     *
+     * @return
+     */
+    public function update(Request $req, $id)
     {
-        // $data = File::get(['name', 'file_path', 'username', 'amount']);
+        $fileModel = File::find($id);
 
-        $data = File::all();
-
-    	// $data = File::join('state', 'state.country_id', '=', 'country.country_id')
-        // ->join('city', 'city.state_id', '=', 'state.state_id')
-        // ->get(['country.country_name', 'state.state_name', 'city.city_name']);
-
-        /*Above code will produce following query
-        Select
-        `country`.`country_name`,
-        `state`.`state_name`,
-        `city`.`city_name`
-        from `country`
-        inner join `state`
-        on `state`.`country_id` = `country`.`country_id`
-        inner join `city`
-        on `city`.`state_id` = `state`.`state_id`
-        */
-
-        //return view('join_table', compact('data'));
-        return view('listfiles', compact('data'));
-    }
-
-    public function downloadfile(Request $request, $id)
-    {
-        $data = File::find($id);
-        //return response()->download(public_path('assets/'.$data->file_path));
-
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return Storage::download($data->file_path);
-            } else {
-                return abort('403');
-            }
-        } else {
-            return abort('403');
+        if (Auth::user()->username != $fileModel->username) {
+            abort(403, 'Unauthorized Action');
         }
 
-        // if(Auth::user() && Auth::id() === $file->user->id) {
-        //     // filename should be a relative path inside storage/app to your file like 'userfiles/report1253.pdf'
-        //     return Storage::download($file->filename);
-        // }
-    }
-
-    public function servefile($id)
-    {
-        $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return response()->file( Storage::path($data->file_path));
-            } else {
-                return abort('403');
-            }
-        } else {
-            return abort('403');
+        //check for possible name to be renamed
+        $trimmedName = trim($req->name);
+        if ($trimmedName != "") {
+            $new_name = $this->filter_filename($trimmedName);
+            $originalFileExt = pathinfo($fileModel->name, PATHINFO_EXTENSION);
+            $new_name = $new_name.'.'.($originalFileExt);
         }
-    }
 
-    public function viewfile($id)
-    {
-        $data = File::find($id);
-        if (Auth::user()->username == $data->username) {
-            return view('viewfilebyid',compact('data'));
-        } else {
-            return abort('403');
+        if ($req->amount != "") {
+            $new_amount = $req->amount;
         }
+
+        $new_info = [
+            'name' => $new_name,
+            'amount'  => $new_amount,
+        ];
+
+        //logging
+        Log::info(json_encode($new_info));
+        error_log(var_dump($new_info));
+
+        $fileModel->update($new_info);
+        return back()
+        ->with('success','File has been updated.')
+        ->with('file', $new_info);
+
     }
 
     //from https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename

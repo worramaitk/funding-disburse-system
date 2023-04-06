@@ -92,17 +92,17 @@
                     @endif
                 </li>
                 <li class="nav-item">
-                    @if (request()->is('file/upload'))
+                    @if (request()->is('file/create'))
                         <a class="nav-link active" aria-current="page">Upload new file</a>
                     @else
-                        <a class="nav-link" href="{{ url('/file/upload') }}">Upload new file</a>
+                        <a class="nav-link" href="{{ url('/file/create') }}">Upload new file</a>
                     @endif
                 </li>
                 <li class="nav-item">
-                    @if (request()->is('file/listyours'))
+                    @if (request()->is('file/index'))
                         <a class="nav-link active" aria-current="page">Your files</a>
                     @else
-                        <a class="nav-link" href="{{ url('/file/listyours') }}">Your files</a>
+                        <a class="nav-link" href="{{ url('/file/index') }}">Your files</a>
                     @endif
                 </li>
                 </ul>
@@ -115,13 +115,13 @@
                                 <a class="nav-link disabled">Current user: {{ Auth::user()->username }}</a>
                             </li>
                             <li>
-                                <a class="nav-link" href="{{ url('/auth/logout') }}">Log out</a>
+                                <a class="btn btn-primary" href="{{ url('/auth/logout') }}" role="button">Log out</a>
                             </li>
                         </ul>
                     @else
                         <ul class="navbar-nav me-auto mb-2 mb-md-0">
                             <li>
-                                <a class="nav-link" href="{{ url('/auth/psu') }}">Log in with PSU passport</a>
+                                <a class="btn btn-primary" href="{{ url('/auth/psu') }}" role="button">Log in with PSU Passport</a>
                             </li>
                         </ul>
                     @endauth
@@ -132,10 +132,11 @@
         </header>
 
 <!-- Begin page content -->
-<main class="flex-shrink-0">
+<main class="flex-shrink-0 h-75">
     @yield('main')
 </main>
-        <!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
+
+<!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
 <footer class="footer mt-auto py-3 bg-light">
     <div class="container">
         <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์ </p>

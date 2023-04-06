@@ -1,12 +1,12 @@
 @extends('layouts.page')
 
 @section('title')
-<title>File upload</title>
+<title>Upload new file</title>
 @endsection
 
 @section('main')
     <div class="container mt-5">
-        <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('file-store') }}" method="post" enctype="multipart/form-data">
           <h3 class="text-center mb-5"><br> Upload File</h3>
             @csrf
             @if ($message = Session::get('success'))
