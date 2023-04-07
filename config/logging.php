@@ -117,6 +117,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        //code based on: https://stackoverflow.com/questions/32552450/how-to-log-info-to-separate-file-in-laravel
+        'your_channel_name' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/your_file_name.log'),
+        ],
     ],
 
 ];

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Brick\Math\Exception\MathException;
 use Mockery\Undefined;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -60,9 +60,10 @@ class PsuAuthController extends Controller
         $userinfo = '';
         $data = curl_exec($ch);
 
-        error_log('message here.');
-        error_log('$data:');
+        error_log('$data from oauth_token_url: ');
         error_log($data);
+
+        Log::channel('your_channel_name')->info('$data from oauth_token_url: '.$data);
 
         $access_token=json_decode($data)->access_token;
         /** Get User Information */
@@ -80,8 +81,12 @@ class PsuAuthController extends Controller
         // `error_log('message here.');` produces ` WARN  message here.` in the terminal
         // code from https://stackoverflow.com/questions/42324438/how-to-print-messages-on-console-in-laravel
         error_log('message here.');
-        error_log('$userinfo:');
+        error_log('$userinfo: ');
         error_log($userinfo);
+
+        //code based on: https://stackoverflow.com/questions/32552450/how-to-log-info-to-separate-file-in-laravel
+        Log::channel('your_channel_name')->info('$userinfo: '.$userinfo);
+
         $user_object = json_decode($userinfo);
 
         $user = User::where('username',$user_object->username)->first();

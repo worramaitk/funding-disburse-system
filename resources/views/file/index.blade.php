@@ -18,9 +18,7 @@
                         <th>name</th>
                         <th>username</th>
                         <th>amount</th>
-                        <th>edit</th>
                         <th>view</th>
-                        <th>download</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,9 +29,7 @@
                             {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
                             <td>{{ $row->username }}</td>
                             <td>{{ $row->amount }}</td>
-                            <td><a href="{{ url('/file/edit',$row->id) }}">edit</a></td>
                             <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>
-                            <td><a href="{{ url('/file/download',$row->id) }}">download</a></td>
                         </tr>
                     @endforeach
                 </tbody>
