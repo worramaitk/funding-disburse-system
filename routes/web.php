@@ -41,14 +41,14 @@ Route::post('/file/update/{id}',        [App\Http\Controllers\FileController::cl
 //admin routes
 Route::get ('/admin',                   [App\Http\Controllers\AdminController::class    , 'index'       ])->name('admin');
 
-Route::get ('/message/create',          [App\Http\Controllers\MessageController::class  , 'create'      ])->name('message-create');
+Route::get ('/message/create/{id}',     [App\Http\Controllers\MessageController::class  , 'create'      ])->name('message-create');
 Route::get ('/message/destroy/{id}',    [App\Http\Controllers\MessageController::class  , 'destroy'     ])->name('message-destroy');
-Route::get ('/message/download/{id}',   [App\Http\Controllers\MessageController::class  , 'download'    ])->name('message-download');
+//Route::get ('/message/download/{id}',   [App\Http\Controllers\MessageController::class  , 'download'    ])->name('message-download');
 Route::get ('/message/edit/{id}',       [App\Http\Controllers\MessageController::class  , 'edit'        ])->name('message-edit');
 Route::get ('/message/index',           [App\Http\Controllers\MessageController::class  , 'index'       ])->name('message-index');
 Route::get ('/message/serve/{id}',      [App\Http\Controllers\MessageController::class  , 'serve'       ])->name('message-serve');
 Route::get ('/message/show/{id}',       [App\Http\Controllers\MessageController::class  , 'show'        ])->name('message-show');
-Route::post('/message/store',           [App\Http\Controllers\MessageController::class  , 'store'       ])->name('message-store');
+Route::post('/message/store/{id}',      [App\Http\Controllers\MessageController::class  , 'store'       ])->name('message-store');
 Route::post('/message/update/{id}',     [App\Http\Controllers\MessageController::class  , 'update'      ])->name('message-update');
 
 //auth routes

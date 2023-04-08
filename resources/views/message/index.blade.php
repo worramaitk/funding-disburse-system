@@ -19,7 +19,6 @@
                         <th>username</th>
                         <th>amount</th>
                         <th>view</th>
-                        <th>send message</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +30,6 @@
                             <td>{{ $row->username }}</td>
                             <td>{{ $row->amount }}</td>
                             <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>
-                            <td><a href="{{ url('/message/create',$row->id) }}">send</a></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -81,29 +81,30 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <ul class="navbar-nav me-auto mb-1 mb-md-0">
                 <li class="nav-item">
+                    {{-- me-2 from https://getbootstrap.com/docs/5.2/utilities/spacing/ --}}
                     {{-- code from https://laraveldaily.com/post/how-to-check-current-url-or-route --}}
                     @if (request()->is('home'))
-                        <a class="btn btn-secondary" role="button" aria-current="page">
+                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
-                        <a class="btn btn-primary" role="button" aria-current="page" href="{{ url('/home') }}">
+                        <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/home') }}">
                     @endif
                     Home</a>
                 </li>
                 <li class="nav-item">
                     @if (request()->is('file/create'))
-                        <a class="btn btn-secondary" role="button" aria-current="page">
+                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
-                        <a class="btn btn-primary" role="button" aria-current="page" href="{{ url('/file/create') }}">
+                        <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/create') }}">
                     @endif
                     Upload new file</a>
                 </li>
                 <li class="nav-item">
                     @if (request()->is('file/index'))
-                        <a class="btn btn-secondary" role="button" aria-current="page">
+                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
-                        <a class="btn btn-primary" role="button" aria-current="page" href="{{ url('/file/index') }}">
+                        <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/index') }}">
                     @endif
                     Your files</a>
                 </li>
@@ -112,7 +113,7 @@
 
                 <form class="d-flex" role="search">
                     @auth
-                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <ul class="navbar-nav me-auto mb-1 mb-md-0">
                             <li>
                                 <a class="nav-link disabled">Current user: {{ Auth::user()->username }}</a>
                             </li>
@@ -121,7 +122,7 @@
                             </li>
                         </ul>
                     @else
-                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <ul class="navbar-nav me-auto mb-1 mb-md-0">
                             <li>
                                 <a class="btn btn-primary" href="{{ url('/auth/psu') }}" role="button">Log in with PSU Passport</a>
                             </li>
