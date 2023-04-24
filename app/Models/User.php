@@ -30,6 +30,12 @@ class User extends Authenticatable
         'fac_id',
         'dept_id',
         'pos_id',
+
+        'access_token',
+        'expires_in',
+        'token_type',
+        'scope',
+        'refresh_token'
     ];
 
     /**

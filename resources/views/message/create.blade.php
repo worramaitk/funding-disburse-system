@@ -28,10 +28,10 @@
                 <input type="text" id="usernamerecipi" name="name" class="border-gray-500 border-2" value="" >
                 <br>
                 <label for="amount">title: </label>
-                <input type="text" id="title" name="amount" class="border-gray-500 border-2" value="0" >
+                <input type="text" id="title" name="title" class="border-gray-500 border-2" value="0" >
                 <br>
                 <label for="amount">text: </label>
-                <textarea type="text" id="text" name="amount" class="border-gray-500 border-2" value="0" ></textarea>
+                <textarea type="text" id="text" name="text" class="border-gray-500 border-2" value="0" ></textarea>
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">send this message</button>
         </form>

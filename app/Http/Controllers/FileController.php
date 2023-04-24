@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Http\Controllers\PsuAuthController;
 
 class FileController extends Controller
 {
@@ -20,6 +21,8 @@ class FileController extends Controller
     {
         // comment that line out if https://oauth2.eng.psu.ac.th/ went down again like on 11:45 2023-03-25
         $this->middleware('auth');
+
+        //$userinfo = $this->getuserinfo($code,$data);
     }
 
     /**
@@ -60,6 +63,7 @@ class FileController extends Controller
      */
     public function download($id)
     {
+
         $data = File::find($id);
 
         if (Auth::user()) {
@@ -71,11 +75,6 @@ class FileController extends Controller
         } else {
             return abort('403', 'Unauthorized Action');
         }
-
-        // if(Auth::user() && Auth::id() === $file->user->id) {
-        //     // filename should be a relative path inside storage/app to your file like 'userfiles/report1253.pdf'
-        //     return Storage::download($file->filename);
-        // }
     }
 
     /**
@@ -96,6 +95,13 @@ class FileController extends Controller
      */
     public function index()
     {
+        //check if session is expired
+        if($this->expired_session()){
+            Session::flush();
+            Auth::logout();
+            return redirect('/');
+        }
+
         $data = File::all();
         return view('file.index', compact('data'));
     }
@@ -151,19 +157,7 @@ class FileController extends Controller
             //Storage::disk('local')->put($req->file('file') , 'public');
             Log::info('name: '.var_dump($req->name));
             error_log('name: '.var_dump($req->name));
-            try{
-                error_log('message here.');
-                error_log('creating test_dir:');
 
-                Storage::makeDirectory('test_dir');
-
-                error_log('created test_dir successfully');
-            } catch (Exception $ex) {
-                // jump to this part
-                // if an exception occurred
-                error_log($ex);
-                error_log('such exception occured while creating test_dir');
-            }
             //check for possible name to be renamed
             $trimmedName = trim($req->name);
             if ($trimmedName == "") {
@@ -189,9 +183,9 @@ class FileController extends Controller
             //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
             $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $req->file('file') , $fileName);
             $fileModel->username = $uploader_username;
-            $fileModel->file_path = $filePath; // '/storage/' . $filePath;
+            $fileModel->file_path = $filePath;
             $fileModel->amount = $req->amount;
-
+            $fileModel->status = 'pending';
             //logging
             Log::info(json_encode($fileModel));
             error_log(var_dump($fileModel));
@@ -216,22 +210,24 @@ class FileController extends Controller
             abort(403, 'Unauthorized Action');
         }
 
+        $new_info = [];
+
         //check for possible name to be renamed
         $trimmedName = trim($req->name);
         if ($trimmedName != "") {
             $new_name = $this->filter_filename($trimmedName);
             $originalFileExt = pathinfo($fileModel->name, PATHINFO_EXTENSION);
-            $new_name = $new_name.'.'.($originalFileExt);
+            $new_info['name'] = $new_name.'.'.($originalFileExt);
         }
 
         if ($req->amount != "") {
-            $new_amount = $req->amount;
+            $new_info['amount'] = $req->amount;
         }
 
-        $new_info = [
-            'name' => $new_name,
-            'amount'  => $new_amount,
-        ];
+        $old_path = $fileModel->file_path;
+        $new_info['file_path'] = dirname($old_path) + '/' + $new_name ;
+        Storage::move($old_path, $new_info['file_path']);
+
 
         //logging
         Log::info(json_encode($new_info));
@@ -289,6 +285,21 @@ class FileController extends Controller
         // ".file-name.-" becomes "file-name"
         $filename = trim($filename, '.-');
         return $filename;
+    }
+
+    public function expired_session()
+    {
+        if( time() - Auth::user()->last_logged_in > Config::get('sessionduration.time_since_last_logged_in') ) {
+            return false;
+        } elseif( time() - Auth::user()->last_activity > Config::get('sessionduration.time_since_last_activity') ) {
+            return false;
+        } else {
+            Auth::user()->update([
+                'last_activity' => time()
+            ]);
+
+
+        }
     }
 }
 

@@ -53,6 +53,7 @@ Route::post('/message/update/{id}',     [App\Http\Controllers\MessageController:
 
 //auth routes
 Route::get ('/auth/psu',                [App\Http\Controllers\PsuAuthController::class  , 'auth'        ])->name('auth-PsuPassport');
+Route::get ('/auth/error',              [App\Http\Controllers\PsuAuthController::class  , 'errorpage'   ])->name('auth-error');
 Route::get ('/auth/psu/callback',       [App\Http\Controllers\PsuAuthController::class  , 'callback'    ])->name('auth-callback-PsuPassport');
 Route::get ('/auth/logout',             [App\Http\Controllers\PsuAuthController::class  , 'logout'      ])->name('auth-logout');
 
@@ -60,6 +61,8 @@ Route::get ('/auth/logout',             [App\Http\Controllers\PsuAuthController:
 Route::get ('/home/phpinfo',            [App\Http\Controllers\HomeController::class     , 'user'        ])->name('home');
 Route::post('/home/usertest',           [App\Http\Controllers\PsuAuthController::class  , 'usertest'    ])->name('usertest');
 Route::get ('/phpinfo',                 [App\Http\Controllers\HomeController::class     , 'phpinfo'     ])->name('phpinfo');
+Route::get ('/calendar/test',           [App\Http\Controllers\CalendarController::class , 'test'        ])->name('calendar-test');
+Route::get ('/calendar/today',          [App\Http\Controllers\CalendarController::class , 'today'       ])->name('calendar-today');
 
 //routes that got redirected
 Route::get ('',                         function(){ return redirect('/home');                           });

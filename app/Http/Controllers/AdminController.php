@@ -22,6 +22,7 @@ class FileController extends Controller
 
     public function index()
     {
+
         if (Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08"){
             return redirect('/home');
         }

@@ -7,7 +7,7 @@
 @section('main')
     <div class="container">
         <br />
-        <h1 class="text-center text-primary">Your uploaded Files</h1>
+        <h1 class="text-center text-primary">messages</h1>
         <br />
 
         <div class="table-responsive">
@@ -15,21 +15,20 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>name</th>
-                        <th>username</th>
-                        <th>amount</th>
-                        <th>view</th>
+                        <th>sender</th>
+                        <th>recipient</th>
+                        <th>title</th>
+                        <th>text</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($data as $row)
                         <tr>
                             <td>{{ $row->id }}</td>
-                            <td>{{ $row->name }}</td>
-                            {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
-                            <td>{{ $row->username }}</td>
-                            <td>{{ $row->amount }}</td>
-                            <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>
+                            <td>{{ $row->usernamesender }}</td>
+                            <td>{{ $row->usernamerecipi }}</td>
+                            <td>{{ $row->title }}</td>
+                            <td>{{ $row->text }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -11,5 +11,6 @@ class File extends Model
         'file_path',
         'username',
         'amount',
+        'status',
     ];
 }

@@ -17,7 +17,7 @@ fi
 role=${CONTAINER_ROLE:-app}
 
 if [ "$role" = "app" ]; then
-    php artisan migrate # no need for migrate:fresh , https://youtu.be/ImtZ5yENzgE?t=3295
+    php artisan migrate:fresh # no need for migrate:fresh , https://youtu.be/ImtZ5yENzgE?t=3295
     php artisan key:generate
     php artisan cache:clear
     #php artisan config:clear

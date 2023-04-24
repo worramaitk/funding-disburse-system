@@ -12,6 +12,7 @@ class CreateFilesTable extends Migration
             $table->string('file_path')->nullable();
             $table->string('username')->nullable();
             $table->decimal('amount', 10, 3);
+            $table->enum('status', ['approved', 'rejected', 'pending']);
             $table->timestamps();
         });
     }
