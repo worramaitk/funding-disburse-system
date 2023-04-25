@@ -8,6 +8,16 @@
     <div class="container">
         <br />
         <h1 class="text-center text-primary">Your uploaded Files</h1>
+        <h2 class="text-center">Total amount of money:
+            <?php
+                $totalamount = 0;
+                foreach ($data as $row) {
+                    $totalamount = $totalamount + $row->amount;
+                }
+                echo $totalamount;
+            ?>
+
+        </h2>
         <br />
 
         <div class="table-responsive">
@@ -27,7 +37,6 @@
                         <tr>
                             <td>{{ $row->id }}</td>
                             <td>{{ $row->name }}</td>
-                            {{-- <td> <a href="{{ Storage::download($row->file_path); }}"> {{ $row->file_path }} </a> </td> --}}
                             <td>{{ $row->username }}</td>
                             <td>{{ $row->amount }}</td>
                             <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>

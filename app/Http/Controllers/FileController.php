@@ -21,8 +21,6 @@ class FileController extends Controller
     {
         // comment that line out if https://oauth2.eng.psu.ac.th/ went down again like on 11:45 2023-03-25
         $this->middleware('auth');
-
-        //$userinfo = $this->getuserinfo($code,$data);
     }
 
     /**
@@ -43,17 +41,16 @@ class FileController extends Controller
     public function destroy($id)
     {
         $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                Storage::delete($data->file_path);
-                $data->delete();
-                return redirect('/file/create')->with('message', 'File deleted successfully');
-            } else {
-                return abort('403', 'Unauthorized Action');
-            }
-        } else {
-            return abort('403', 'Unauthorized Action');
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
         }
+        if ( !$this->check_rights($data->username) ) {
+            return abort('403', 'You don\'t have access to this file.');
+        }
+
+        Storage::delete($data->file_path);
+        $data->delete();
+        return redirect('/file/create')->with('message', 'File deleted successfully');
     }
 
     /**
@@ -63,18 +60,15 @@ class FileController extends Controller
      */
     public function download($id)
     {
-
         $data = File::find($id);
-
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return Storage::download($data->file_path);
-            } else {
-                return abort('403', 'Unauthorized Action');
-            }
-        } else {
-            return abort('403', 'Unauthorized Action');
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
         }
+        if ( !$this->check_rights($data->username) ) {
+            return abort('403', 'You don\'t have access to this file.');
+        }
+
+        return Storage::download($data->file_path);
     }
 
     /**
@@ -85,6 +79,13 @@ class FileController extends Controller
     public function edit($id)
     {
         $data = File::find($id);
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
+        }
+        if ( !$this->check_rights($data->username) ) {
+            return abort('403', 'You don\'t have access to this file.');
+        }
+
         return view('file.edit', compact('data'));
     }
 
@@ -95,14 +96,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        //check if session is expired
-        if($this->expired_session()){
-            Session::flush();
-            Auth::logout();
-            return redirect('/');
-        }
-
-        $data = File::all();
+        $data = File::all()->where('username', Auth::user()->username);
         return view('file.index', compact('data'));
     }
 
@@ -114,15 +108,14 @@ class FileController extends Controller
     public function serve($id)
     {
         $data = File::find($id);
-        if (Auth::user()) {
-            if (Auth::user()->username == $data->username) {
-                return response()->file( Storage::path($data->file_path));
-            } else {
-                return abort('403', 'Unauthorized Action');
-            }
-        } else {
-            return abort('403', 'Unauthorized Action');
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
         }
+        if ( !$this->check_rights($data->username) ) {
+            return abort('403', 'You don\'t have access to this file.');
+        }
+
+        return response()->file( Storage::path($data->file_path));
     }
 
     /**
@@ -133,11 +126,14 @@ class FileController extends Controller
     public function show($id)
     {
         $data = File::find($id);
-        if (Auth::user()->username == $data->username) {
-            return view('file.show',compact('data'));
-        } else {
-            return abort('403', 'Unauthorized Action');
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
         }
+        if ( !$this->check_rights($data->username) ) {
+            return abort('403', 'You don\'t have access to this file.');
+        }
+
+        return view('file.show',compact('data'));
     }
 
     /**
@@ -147,14 +143,15 @@ class FileController extends Controller
      */
     public function store(Request $req)
     {
+        if ( !Auth::user() ) {
+            return back()->withErrors(['field_name' => ['Error: You\'re not logged in']]);
+        }
+
         $req->validate([
             'file' => 'required|max:20000'
         ]);
         $fileModel = new File;
         if($req->file()) {
-            //$fileName = time().'_'.$req->file->getClientOriginalName();
-             //->storeAs('uploads', $fileName, 'public');
-            //Storage::disk('local')->put($req->file('file') , 'public');
             Log::info('name: '.var_dump($req->name));
             error_log('name: '.var_dump($req->name));
 
@@ -206,8 +203,11 @@ class FileController extends Controller
     {
         $fileModel = File::find($id);
 
-        if (Auth::user()->username != $fileModel->username) {
-            abort(403, 'Unauthorized Action');
+        if ( !Auth::user() ) {
+            return back()->withErrors(['field_name' => ['Error: You\'re not logged in']]);
+        }
+        if ( !$this->check_rights($fileModel->username) ) {
+            return back()->withErrors(['field_name' => ['Error: You\'re unauthorized.']]);
         }
 
         $new_info = [];
@@ -287,19 +287,12 @@ class FileController extends Controller
         return $filename;
     }
 
-    public function expired_session()
+    public function check_rights($username)
     {
-        if( time() - Auth::user()->last_logged_in > Config::get('sessionduration.time_since_last_logged_in') ) {
-            return false;
-        } elseif( time() - Auth::user()->last_activity > Config::get('sessionduration.time_since_last_activity') ) {
-            return false;
-        } else {
-            Auth::user()->update([
-                'last_activity' => time()
-            ]);
-
-
-        }
+        //check if the current user is the same as a given username
+        return (Auth::user()->username == $username
+        //if the current user is NOT either a Bachelor's degree student ["06"] , a Master's degree student ["07"] or PHD student ["08"] , then they're admin
+        || !(Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08")) ;
     }
 }
 

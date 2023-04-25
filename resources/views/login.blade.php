@@ -31,5 +31,3 @@ header( "refresh:5;url=/auth/psu " );
     </body>
 </html>
 
-
-
