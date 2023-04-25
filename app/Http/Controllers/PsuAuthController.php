@@ -23,47 +23,31 @@ class PsuAuthController extends Controller
 
     public function callback()
     {
-
-        $client_id                = Config::get('oauthpsu.client_id');
-        $client_secret            = Config::get('oauthpsu.client_secret');
-        $redirect_uri             = Config::get('oauthpsu.redirect_uri');
-        $oauth_authorize_url      = Config::get('oauthpsu.oauth_authorize_url');
-        $oauth_token_url          = Config::get('oauthpsu.oauth_token_url');
-        $userinfo_endpoint_url    = Config::get('oauthpsu.userinfo_endpoint_url');
-
         //get $data as data related to access token and $userinfo for user information
         $code = trim($_REQUEST['code']);
         if($code==''){
             return redirect('/auth/error');
         } else {
             $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, $oauth_token_url);
-
+            curl_setopt($ch, CURLOPT_URL, config::get('oauthpsu.oauth_token_url'));
             curl_setopt($ch, CURLOPT_POST, TRUE);
 
-
-
             /** Authorize Code */
-
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
             curl_setopt($ch, CURLOPT_POSTFIELDS, array(
                 'code' => $code,
-                'client_id' => $client_id,
-                'client_secret' => $client_secret,
-                'redirect_uri' => $redirect_uri,
+                'client_id' => config::get('oauthpsu.client_id'),
+                'client_secret' => config::get('oauthpsu.client_secret'),
+                'redirect_uri' => config::get('oauthpsu.redirect_uri'),
                 'grant_type' => 'authorization_code'
             ));
-
             $data = json_decode(curl_exec($ch),true);
-
             $access_token=$data["access_token"];
+
             /** Get User Information */
             $authorization = "Authorization: Bearer ".$access_token;
-            curl_setopt($ch, CURLOPT_URL, $userinfo_endpoint_url);
+            curl_setopt($ch, CURLOPT_URL, config::get('oauthpsu.userinfo_endpoint_url'));
             curl_setopt($ch, CURLOPT_POST, TRUE);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
