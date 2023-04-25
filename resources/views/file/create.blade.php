@@ -7,7 +7,7 @@
 @section('main')
     <div class="container mt-5">
         <form action="{{ route('file-store') }}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5"><br> Upload File</h3>
+          <h3 class="text-center mb-5"><br>Upload File</h3>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">

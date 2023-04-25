@@ -43,7 +43,6 @@ Route::get ('/admin',                   [App\Http\Controllers\AdminController::c
 
 Route::get ('/message/create/{id}',     [App\Http\Controllers\MessageController::class  , 'create'      ])->name('message-create');
 Route::get ('/message/destroy/{id}',    [App\Http\Controllers\MessageController::class  , 'destroy'     ])->name('message-destroy');
-//Route::get ('/message/download/{id}',   [App\Http\Controllers\MessageController::class  , 'download'    ])->name('message-download');
 Route::get ('/message/edit/{id}',       [App\Http\Controllers\MessageController::class  , 'edit'        ])->name('message-edit');
 Route::get ('/message/index',           [App\Http\Controllers\MessageController::class  , 'index'       ])->name('message-index');
 Route::get ('/message/serve/{id}',      [App\Http\Controllers\MessageController::class  , 'serve'       ])->name('message-serve');

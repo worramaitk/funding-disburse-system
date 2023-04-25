@@ -13,6 +13,14 @@
     <a class="btn btn-primary" href="/file/serve/{{$data->id}}" role="button">view raw</a>
     <a class="btn btn-primary" href="/file/download/{{$data->id}}" role="button">download</a>
     <a class="btn btn-primary" href="/file/destroy/{{$data->id}}" role="button">delete this file</a>
+    <?php
+    //if the current user is an admin, give them options to approve or deny the file
+    ?>
+    <a class="btn btn-primary" href="/admin/approve/{{$data->id}}" role="button">approve</a>
+    <a class="btn btn-primary" href="/admin/deny/{{$data->id}}" role="button">deny</a>
+    <?php
+    //closing said if statement
+    ?>
     {{-- <iframe src="/file/serve/{{$data->id}}" ></iframe> --}}
     {{-- following code is from: https://stackoverflow.com/questions/23218332/how-to-do-auto-width-with-html-iframe --}}
     <?php

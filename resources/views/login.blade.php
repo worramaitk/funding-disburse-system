@@ -1,6 +1,7 @@
 <?php
 
 header( "refresh:5;url=/auth/psu " );
+//redirect to /auth/psu after 5 seconds
 ?>
 
 <!DOCTYPE html>
@@ -32,4 +33,3 @@ header( "refresh:5;url=/auth/psu " );
 
 
 
-    
