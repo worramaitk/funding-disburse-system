@@ -64,6 +64,7 @@ Route::post('/home/usertest',           [App\Http\Controllers\PsuAuthController:
 Route::get ('/phpinfo',                 [App\Http\Controllers\HomeController::class     , 'phpinfo'     ])->name('phpinfo');
 Route::get ('/calendar/test',           [App\Http\Controllers\CalendarController::class , 'test'        ])->name('calendar-test');
 Route::get ('/calendar/today',          [App\Http\Controllers\CalendarController::class , 'today'       ])->name('calendar-today');
+Route::get ('/test/logging/{text}',     [App\Http\Controllers\PsuAuthController::class  , 'logging'     ])->name('usertest');
 
 //routes that got redirected
 Route::get ('',                         function(){ return redirect('/home');                           });

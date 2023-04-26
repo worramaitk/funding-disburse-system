@@ -21,15 +21,15 @@
         <br />
 
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered border-dark table-striped">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>name</th>
                         <th>username</th>
                         <th>amount</th>
+                        <th>status</th>
                         <th>view</th>
-                        <th>send message</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,8 +39,18 @@
                             <td>{{ $row->name }}</td>
                             <td>{{ $row->username }}</td>
                             <td>{{ $row->amount }}</td>
+                            <?php
+                                if($row->status == 'approved') {
+                                    echo '<td class="p-3 mb-2 bg-success text-white">approved</td>' ;
+                                } else if($row->status == 'denied') {
+                                    echo '<td class="p-3 mb-2 bg-danger text-white">denied</td>' ;
+                                } else if($row->status == 'pending'){
+                                    echo '<td class="p-3 mb-2 bg-primary text-white">pending</td>' ;
+                                } else {
+                                    echo '<td>What the hell this shouldn\'t be possible</td>' ;
+                                }
+                            ?>
                             <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>
-                            <td><a href="{{ url('/message/create',$row->id) }}">send</a></td>
                         </tr>
                     @endforeach
                 </tbody>

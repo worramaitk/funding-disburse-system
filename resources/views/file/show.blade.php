@@ -22,21 +22,22 @@
     <a class="btn btn-primary" href="/file/destroy/{{$data->id}}" role="button">delete this file</a>
     <a class="btn btn-warning" href="/admin/approve/{{$data->id}}" role="button">approve</a>
     <a class="btn btn-danger" href="/admin/deny/{{$data->id}}" role="button">deny</a>
+
     <?php
-    }
-    //closing said if statement
+    } //closing previous if statement
     ?>
     {{-- <iframe src="/file/serve/{{$data->id}}" ></iframe> --}}
     {{-- following code is from: https://stackoverflow.com/questions/23218332/how-to-do-auto-width-with-html-iframe --}}
+    <br />
     <?php
-    $is_img = 0;
+    $is_img = false;
     foreach (array('.apng','.avif','.gif','.jpg','.jpeg','.jfif','.pjpeg','.pjp','.png','.svg','.webp') as $file_ext){
         if(str_ends_with($data->name,$file_ext)){
-            $is_img = 1;
+            $is_img = true;
         }
     }
     ?>
-    @if($is_img == 1)
+    @if($is_img)
         <img
         src="/file/serve/{{$data->id}}"
         frameborder="0"

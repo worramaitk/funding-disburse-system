@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\LogController;
 use Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -59,13 +60,7 @@ class PsuAuthController extends Controller
             $userinfo = array_merge($userinfo, $data);
         }
 
-        // `error_log('message here.');` produces ` WARN  message here.` in the terminal
-        // code from https://stackoverflow.com/questions/42324438/how-to-print-messages-on-console-in-laravel
-        error_log('message here.');
-        error_log('$userinfo: '.json_encode($userinfo));
-
-        //code based on: https://stackoverflow.com/questions/32552450/how-to-log-info-to-separate-file-in-laravel
-        Log::channel('your_channel_name')->info('$userinfo: '.json_encode($userinfo));
+        LogController::logging('$userinfo: '.json_encode($userinfo));
 
         $user = User::where('username',$userinfo["username"])->first();
 
@@ -129,6 +124,7 @@ class PsuAuthController extends Controller
                 'fac_id'        => $req->fac_id,
                 'dept_id'       => $req->dept_id,
                 'pos_id'        => $req->pos_id,
+
                 'access_token'  => $req->access_token,
                 'expires_in'    => $req->expires_in,
                 'token_type'    => $req->token_type,
@@ -151,4 +147,6 @@ class PsuAuthController extends Controller
     {
         return view('auth.error');
     }
+
+
 }

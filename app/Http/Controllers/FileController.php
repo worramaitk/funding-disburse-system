@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use App\Http\Controllers\PsuAuthController;
+use App\Http\Controllers\LogController;
 
 class FileController extends Controller
 {
@@ -151,47 +151,43 @@ class FileController extends Controller
             'file' => 'required|max:20000'
         ]);
         $fileModel = new File;
-        if($req->file()) {
-            Log::info('name: '.var_dump($req->name));
-            error_log('name: '.var_dump($req->name));
-
-            //check for possible name to be renamed
-            $trimmedName = trim($req->name);
-            if ($trimmedName == "") {
-                //keep file name as the original one
-                $originalFileName = $this->filter_filename($req->file->getClientOriginalName());
-                $fileName = ($originalFileName);
-            } else {
-                $originalFileExt = $this->filter_filename($req->file->getClientOriginalExtension());
-                $fileName = $trimmedName.'.'.($originalFileExt);
-            }
-            // $filePath = $req->file('file')->move('assets',$fileName);
-
-            $fileModel->name = $fileName ; //time().'_'.$req->file->getClientOriginalName();
-
-            if (Auth::user()) {
-                //uploader was logged in
-                $uploader_username = Auth::user()->username;
-            }
-            else {
-                //uploader was not logged in
-                $uploader_username = "guest";
-            }
-            //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
-            $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $req->file('file') , $fileName);
-            $fileModel->username = $uploader_username;
-            $fileModel->file_path = $filePath;
-            $fileModel->amount = $req->amount;
-            $fileModel->status = 'pending';
-            //logging
-            Log::info(json_encode($fileModel));
-            error_log(var_dump($fileModel));
-
-            $fileModel->save();
-            return back()
-            ->with('success','File has been uploaded.')
-            ->with('file', $fileName);
+        if(!$req->file()) {
+            return back()->withErrors(['field_name' => ['Error: There\'s no file to upload']]);
         }
+
+        Log::info('req->name: '.var_dump($req->name));
+        error_log('req->name: '.var_dump($req->name));
+
+        //check for possible name to be renamed
+        $trimmedName = trim($req->name);
+        if ($trimmedName == "") {
+            //keep file name as the original one
+            $fileModel->name = $this->filter_filename($req->file->getClientOriginalName());
+        } else {
+            $fileModel->name = $trimmedName.'.'.$this->filter_filename($req->file->getClientOriginalExtension());;
+        }
+
+        if (Auth::user()) {
+            //uploader was logged in
+            $uploader_username = Auth::user()->username;
+        }
+        else {
+            //uploader was not logged in
+            $uploader_username = "guest";
+        }
+        //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
+        $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $req->file('file') , $fileModel->name);
+        $fileModel->username = $uploader_username;
+        $fileModel->file_path = $filePath;
+        $fileModel->amount = $req->amount;
+        $fileModel->status = 'pending';
+        //logging
+        Log::info(json_encode($fileModel));
+        error_log(var_dump($fileModel));
+
+        $fileModel->save();
+        return back()
+        ->with('success','File named '.$fileModel->name.' has been uploaded.');
     }
 
     /**
@@ -216,18 +212,16 @@ class FileController extends Controller
         $trimmedName = trim($req->name);
         if ($trimmedName != "") {
             $new_name = $this->filter_filename($trimmedName);
-            $originalFileExt = pathinfo($fileModel->name, PATHINFO_EXTENSION);
-            $new_info['name'] = $new_name.'.'.($originalFileExt);
+            $new_info['name'] = $new_name.'.'.pathinfo($fileModel->name, PATHINFO_EXTENSION);
+
+            $old_path = $fileModel->file_path;
+            $new_info['file_path'] = dirname($old_path).'/'.$new_info['name'] ;
+            Storage::move($old_path, $new_info['file_path']);
         }
 
         if ($req->amount != "") {
             $new_info['amount'] = $req->amount;
         }
-
-        $old_path = $fileModel->file_path;
-        $new_info['file_path'] = dirname($old_path) + '/' + $new_name ;
-        Storage::move($old_path, $new_info['file_path']);
-
 
         //logging
         Log::info(json_encode($new_info));
@@ -237,12 +231,15 @@ class FileController extends Controller
         return back()
         ->with('success','File has been updated.')
         ->with('file', $new_info);
-
     }
 
     //from https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename
     public function filter_filename($filename, $beautify=true)
     {
+        //logging
+        Log::info(json_encode($new_info));
+        error_log(var_dump($new_info));
+
         // sanitize filename
         $filename = preg_replace(
             '~

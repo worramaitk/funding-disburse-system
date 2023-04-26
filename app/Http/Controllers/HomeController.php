@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\LogController;
 
 class HomeController extends Controller
 {
@@ -15,12 +16,15 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
     public function user()
     {
-        return view('t');
+        return view('testcustomuser');
     }
+
     public function phpinfo()
     {
+        LogController::logging("loading phpinfo");
         return phpinfo();
     }
 }

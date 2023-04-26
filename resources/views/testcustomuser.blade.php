@@ -52,7 +52,21 @@
                 <br>
                 <label for="amount">pos_id:</label>
                 <input type="text" id="pos_id" name="pos_id" class="border-gray-500 border-2" value="" >
-
+                <br>
+                <label for="amount">access_token:</label>
+                <input type="text" id="access_token" name="access_token" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">expires_in:</label>
+                <input type="text" id="expires_in" name="expires_in" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">token_type:</label>
+                <input type="text" id="token_type" name="token_type" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">scope:</label>
+                <input type="text" id="scope" name="scope" class="border-gray-500 border-2" value="" >
+                <br>
+                <label for="amount">refresh_token:</label>
+                <input type="text" id="refresh_token" name="refresh_token" class="border-gray-500 border-2" value="" >
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Log in as a custom user</button>
         </form>
