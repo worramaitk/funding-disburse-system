@@ -48,7 +48,9 @@ class Kernel extends HttpKernel
     /**
      * The application's middleware aliases.
      *
-     * Aliases may be used to conveniently assign middleware to routes and groups.
+     * Aliases may be used instead of class names to conveniently assign middleware to routes and groups.
+     *
+     * https://github.com/laravel/laravel/commit/ebf9d30bf3cf41c376e5b2e1ba1b51882d200848#diff-df6b23c7ec651a76ba2081a6e22960428ffab37044fe22a2e523355c54a12399
      *
      * @var array<string, class-string|string>
      */

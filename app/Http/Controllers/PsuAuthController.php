@@ -84,6 +84,7 @@ class PsuAuthController extends Controller
                 'refresh_token' => $userinfo["refresh_token"],
             ]);
             $user = $new_user;
+            LogController::logging('new user      : '.json_encode($userinfo));
         } else {
             $new_info = [
                 'first_name'    => $userinfo["first_name"],
@@ -102,6 +103,7 @@ class PsuAuthController extends Controller
                 'refresh_token' => $userinfo["refresh_token"],
             ];
             $user->update($new_info);
+            LogController::logging('returning user: '.json_encode($userinfo));
         }
 
         //https://stackoverflow.com/questions/48859424/laravel-session-expire-time-for-each-session

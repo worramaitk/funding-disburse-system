@@ -223,9 +223,7 @@ class FileController extends Controller
             $new_info['amount'] = $req->amount;
         }
 
-        //logging
-        Log::info(json_encode($new_info));
-        error_log(var_dump($new_info));
+        LogController::logging('info to be updated: '.json_encode($new_info));
 
         $fileModel->update($new_info);
         return back()
@@ -236,9 +234,7 @@ class FileController extends Controller
     //from https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename
     public function filter_filename($filename, $beautify=true)
     {
-        //logging
-        Log::info(json_encode($new_info));
-        error_log(var_dump($new_info));
+        LogController::logging('filtering filename: "'.($filename).'"');
 
         // sanitize filename
         $filename = preg_replace(
