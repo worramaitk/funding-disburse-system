@@ -1,3 +1,9 @@
+<?php
+function echocell($string,$link,$class = "")
+{
+    echo '<td class="'.$class.'"><a href="'.url('/file/show',$link).'">'.$string.'</a></td>';
+}            ?>
+
 @extends('layouts.page')
 
 @section('title')
@@ -15,13 +21,33 @@
                     $totalamount = $totalamount + $row->amount;
                 }
                 echo $totalamount;
+
+
             ?>
 
         </h2>
         <br />
 
+        <style>
+            td a {
+                display: block;
+                padding: 5px;
+            }
+            a {
+    color: black;
+    text-decoration: underline;
+}
+            .table-sm>:not(caption)>*>* {
+                padding: 0rem 0rem;
+            }
+            .table-hover>tbody>tr:hover>* {
+                --bs-table-accent-bg: var(--bs-table-hover-bg);
+                color: var(--bs-table-hover-color);
+            }
+        </style>
+
         <div class="table-responsive">
-            <table class="table table-bordered border-dark table-striped">
+            <table class="table table-sm table-bordered border-dark table-hover table-striped">
                 <thead>
                     <tr>
                         <th>id</th>
@@ -29,28 +55,30 @@
                         <th>username</th>
                         <th>amount</th>
                         <th>status</th>
-                        <th>view</th>
+                        <th>created_at</th>
+                        <th>updated_at</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($data as $row)
                         <tr>
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->name }}</td>
-                            <td>{{ $row->username }}</td>
-                            <td>{{ $row->amount }}</td>
                             <?php
-                                if($row->status == 'approved') {
-                                    echo '<td class="p-3 mb-2 bg-success text-white">approved</td>' ;
-                                } else if($row->status == 'denied') {
-                                    echo '<td class="p-3 mb-2 bg-danger text-white">denied</td>' ;
-                                } else if($row->status == 'pending'){
-                                    echo '<td class="p-3 mb-2 bg-primary text-white">pending</td>' ;
-                                } else {
-                                    echo '<td>What the hell this shouldn\'t be possible</td>' ;
-                                }
+                            echocell($row->id,$row->id);
+                            echocell($row->name,$row->id);
+                            echocell($row->username,$row->id);
+                            echocell($row->amount,$row->id);
+                            if($row->status == 'approved') {
+                                echocell('approved',$row->id,"table-success");
+                            } else if($row->status == 'denied') {
+                                echocell('denied',$row->id,"table-danger");
+                            } else if($row->status == 'pending'){
+                                echocell('pending',$row->id,"table-primary");
+                            } else {
+                                echo '<td>What the hell this shouldn\'t be possible</td>' ;
+                            }
+                            echocell($row->created_at,$row->id);
+                            echocell($row->updated_at,$row->id);
                             ?>
-                            <td><a href="{{ url('/file/show',$row->id) }}">view</a></td>
                         </tr>
                     @endforeach
                 </tbody>

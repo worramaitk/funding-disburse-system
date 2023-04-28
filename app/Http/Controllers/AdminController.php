@@ -33,7 +33,7 @@ class AdminController extends Controller
         }
 
         $data = File::all();
-        return view('file.index', compact('data'));
+        return view('admin.index', compact('data'));
     }
 
     public function approve($id)
@@ -73,11 +73,11 @@ class AdminController extends Controller
 
         $new_info['status'] = 'denied' ;
 
+
         $fileModel->update($new_info);
         return back()
         ->with('success','File has been updated.')
         ->with('file', $new_info);
-
     }
 
     public function check_rights($username)

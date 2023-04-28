@@ -60,11 +60,12 @@ Route::get ('/auth/logout',             [App\Http\Controllers\PsuAuthController:
 
 //testing routes
 Route::get ('/home/phpinfo',            [App\Http\Controllers\HomeController::class     , 'user'        ])->name('home');
+Route::get ('/home/usertest',           [App\Http\Controllers\PsuAuthController::class  , 'custom'      ])->name('usercustom');
 Route::post('/home/usertest',           [App\Http\Controllers\PsuAuthController::class  , 'usertest'    ])->name('usertest');
 Route::get ('/phpinfo',                 [App\Http\Controllers\HomeController::class     , 'phpinfo'     ])->name('phpinfo');
 Route::get ('/calendar/test',           [App\Http\Controllers\CalendarController::class , 'test'        ])->name('calendar-test');
 Route::get ('/calendar/today',          [App\Http\Controllers\CalendarController::class , 'today'       ])->name('calendar-today');
-Route::get ('/test/logging/{text}',     [App\Http\Controllers\PsuAuthController::class  , 'logging'     ])->name('usertest');
+Route::get ('/test/logging/{text}',     [App\Http\Controllers\PsuAuthController::class  , 'logging'     ])->name('loggingtest');
 
 //routes that got redirected
 Route::get ('',                         function(){ return redirect('/home');                           });

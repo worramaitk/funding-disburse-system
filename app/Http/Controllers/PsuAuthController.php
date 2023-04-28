@@ -60,7 +60,7 @@ class PsuAuthController extends Controller
             $userinfo = array_merge($userinfo, $data);
         }
 
-        LogController::logging('$userinfo: '.json_encode($userinfo));
+        //LogController::logging('$userinfo: '.json_encode($userinfo));
 
         $user = User::where('username',$userinfo["username"])->first();
 
@@ -114,26 +114,29 @@ class PsuAuthController extends Controller
 
     public function usertest(Request $req)
     {
-        $user = User::where('username',$req->username)->first();
+        $t = json_decode($req->text);
+        $user = User::where('username',$t->username)->first();
         if(!$user){
             $new_user = User::create([
-                'username'      => $req->username,
-                'first_name'    => $req->first_name,
-                'last_name'     => $req->last_name,
-                'staff_id'      => $req->staff_id,
-                'email'         => $req->email,
-                'campus_id'     => $req->campus_id,
-                'fac_id'        => $req->fac_id,
-                'dept_id'       => $req->dept_id,
-                'pos_id'        => $req->pos_id,
+                'username'      => $t->username,
+                'first_name'    => $t->first_name,
+                'last_name'     => $t->last_name,
+                'staff_id'      => $t->staff_id,
+                'email'         => $t->email,
+                'campus_id'     => $t->campus_id,
+                'fac_id'        => $t->fac_id,
+                'dept_id'       => $t->dept_id,
+                'pos_id'        => $t->pos_id,
 
-                'access_token'  => $req->access_token,
-                'expires_in'    => $req->expires_in,
-                'token_type'    => $req->token_type,
-                'scope'         => $req->scope,
-                'refresh_token' => $req->refresh_token,
+                'access_token'  => $t->access_token,
+                'expires_in'    => $t->expires_in,
+                'token_type'    => $t->token_type,
+                'scope'         => $t->scope,
+                'refresh_token' => $t->refresh_token,
             ]);
             $user = $new_user;
+        } else {
+            return back()->withErrors(['field_name' => ['Error: That username is taken']]);
         }
         Auth::login($user);
         return redirect('/home');
@@ -145,10 +148,13 @@ class PsuAuthController extends Controller
         return redirect('/');
     }
 
-    public function errorpage()
+    public function custom()
+    {
+        return view('testcustomuser');
+    }
+
+    public function customuser()
     {
         return view('auth.error');
     }
-
-
 }

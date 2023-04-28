@@ -7,7 +7,9 @@
 @section('main')
     <div class="container mt-5">
         <form action="{{route('usertest')}}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5"><br>Log in as a custom user</h3>
+          <h3 class="text-center mb-5"><br>Log in as a custom user (for depug purposes)</h3>
+          <h4 class="text-center mb-5"><br>e.g. {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"b1abac663d80625ccc1ee0a84539d670ceca76ad"}</h4>
+
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -25,48 +27,11 @@
           @endif
 
             <div class="custom-user">
+
                 <br>
-                <label for="amount">username:</label>
-                <input type="text" id="username" name="username" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">first_name:</label>
-                <input type="text" id="first_name" name="first_name" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">last_name:</label>
-                <input type="text" id="last_name" name="last_name" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">staff_id:</label>
-                <input type="text" id="staff_id" name="staff_id" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">email:</label>
-                <input type="text" id="email" name="email" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">campus_id:</label>
-                <input type="text" id="campus_id" name="campus_id" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">fac_id:</label>
-                <input type="text" id="fac_id" name="fac_id" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">dept_id:</label>
-                <input type="text" id="dept_id" name="dept_id" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">pos_id:</label>
-                <input type="text" id="pos_id" name="pos_id" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">access_token:</label>
-                <input type="text" id="access_token" name="access_token" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">expires_in:</label>
-                <input type="text" id="expires_in" name="expires_in" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">token_type:</label>
-                <input type="text" id="token_type" name="token_type" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">scope:</label>
-                <input type="text" id="scope" name="scope" class="border-gray-500 border-2" value="" >
-                <br>
-                <label for="amount">refresh_token:</label>
-                <input type="text" id="refresh_token" name="refresh_token" class="border-gray-500 border-2" value="" >
+                <label for="amount">text: </label>
+                <textarea type="text" id="text" name="text" class="border-gray-500 border-2" value="0" ></textarea>
+
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Log in as a custom user</button>
         </form>

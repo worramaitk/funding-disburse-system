@@ -23,7 +23,7 @@ class HomeController extends Controller
 
     public function phpinfo()
     {
-        LogController::logging("loading phpinfo");
+        LogController::logging("loading http://localhost:8000/phpinfo");
         return phpinfo();
     }
 }

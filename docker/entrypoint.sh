@@ -25,6 +25,12 @@ if [ "$role" = "app" ]; then
     #down temp to speed up debugging php artisan route:clear
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
     exec docker-php-entrypoint "$@"
+elif [ "$role" = "scheduling" ]; then
+    echo "Running the scheduling server ... "
+    # also note to self: the color of container name with docker-compose
+    # like 'example-app-scheduling-1  |' depends on the order in docker-compose.yml file
+    # schedule:run would run the scheduling only once instead idk why would anyone want that
+    php artisan schedule:work
 elif [ "$role" = "queue" ]; then
     echo "Running the queue ... "
     php /var/www/artisan queue:work --verbose --tries=3 --timeout=180

@@ -1,5 +1,5 @@
-# This file is based on https://github.com/emad-zaamout/Laravel-Complete-Dockerization/blob/main/docker-compose.yml 
-# however I don't use either Websocket or node so I comment out those two containers 
+# This file is based on https://github.com/emad-zaamout/Laravel-Complete-Dockerization/blob/main/docker-compose.yml
+# however I don't use either Websocket or node so I comment out those two containers
 
 version: "3.8"
 services:
@@ -55,6 +55,20 @@ services:
         volumes:
             - db-data:/var/lib/mysql
 
+    # Scheduling Server
+    scheduling:
+        build:
+            context: .
+            target: php
+            args:
+                - APP_ENV=${APP_ENV}
+        environment:
+            - APP_ENV=${APP_ENV}
+            - CONTAINER_ROLE=scheduling
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+
     # Redis Server
     redis:
         image: redis:alpine
@@ -92,7 +106,6 @@ services:
     #         - 5173:5173
     #     command:
     #         - ls -R
-
 
 volumes:
     db-data: ~
