@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule
-        ->exec('current_time=$(date) ; echo "Current date and time: $current_time"')
+        // Linux that report memory statistics to the pseudo filesystem /proc/meminfo. https://www.howtogeek.com/659529/how-to-check-memory-usage-from-the-linux-terminal/
+        //technically speaking I could also use printf instead of echo https://stackoverflow.com/questions/8467424/echo-newline-in-bash-prints-literal-n
+        ->exec('cur=$(date) mem=$(cat /proc/meminfo); echo "\nCurrent date and time: $cur\nCurrent memory usage:\n$mem"')
         ->everyMinute()
         ->appendOutputTo("scheduler-output.log");
         // replace above line with ‘->sendOutputTo("scheduler-output.log");’ instead if you wish to overwrite the whole file.
