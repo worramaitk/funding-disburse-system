@@ -24,7 +24,7 @@
             </div>
           @endif
             <div class="custom-file">
-                <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                <input type="file" name="files[]" class="custom-file-input" id="chooseFile" multiple>
                 <label class="custom-file-label" for="chooseFile">Select file</label>
                 <br>
                 <label for="amount">File name (if you choose to overwrite):</label>

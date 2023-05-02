@@ -147,47 +147,55 @@ class FileController extends Controller
             return back()->withErrors(['field_name' => ['Error: You\'re not logged in']]);
         }
 
+        //LogController::logging(var_dump($req->files));
         $req->validate([
-            'file' => 'required|max:20000'
+            'files' => 'required|max:90000'
         ]);
-        $fileModel = new File;
+
+        //code from: https://www.tutsmake.com/laravel-8-multiple-file-upload-example/
         if(!$req->file()) {
             return back()->withErrors(['field_name' => ['Error: There\'s no file to upload']]);
         }
+        $amount_of_files = sizeof($req->file('files'));
+        LogController::logging("uploading ".$amount_of_files." files");
+        foreach($req->file('files') as $key => $fi){
+            $fileModel = new File;
 
-        Log::info('req->name: '.var_dump($req->name));
-        error_log('req->name: '.var_dump($req->name));
+            Log::info('req->name: '.var_dump($req->name));
+            error_log('req->name: '.var_dump($req->name));
 
-        //check for possible name to be renamed
-        $trimmedName = trim($req->name);
-        if ($trimmedName == "") {
-            //keep file name as the original one
-            $fileModel->name = $this->filter_filename($req->file->getClientOriginalName());
-        } else {
-            $fileModel->name = $trimmedName.'.'.$this->filter_filename($req->file->getClientOriginalExtension());;
+            //check for possible name to be renamed
+            $trimmedName = trim($req->name);
+            if ($trimmedName == "") {
+                //keep file name as the original one
+                $fileModel->name = $this->filter_filename($fi->getClientOriginalName());
+            } else {
+                $fileModel->name = $trimmedName.'.'.$this->filter_filename($fi->getClientOriginalExtension());;
+            }
+
+            if (Auth::user()) {
+                //uploader was logged in
+                $uploader_username = Auth::user()->username;
+            }
+            else {
+                //uploader was not logged in
+                $uploader_username = "guest";
+            }
+            //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
+            $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $fi , $fileModel->name);
+            $fileModel->username = $uploader_username;
+            $fileModel->file_path = $filePath;
+            $fileModel->amount = $req->amount;
+            $fileModel->status = 'pending';
+            //logging
+            LogController::logging(var_dump($fileModel));
+
+            $fileModel->save();
         }
 
-        if (Auth::user()) {
-            //uploader was logged in
-            $uploader_username = Auth::user()->username;
-        }
-        else {
-            //uploader was not logged in
-            $uploader_username = "guest";
-        }
-        //Storage::putFile() doesn't accept file name as argument so we're using Storage::putFileAs() instead
-        $filePath = Storage::putFileAs($uploader_username.'/'.time().'/'.Str::random(8) , $req->file('file') , $fileModel->name);
-        $fileModel->username = $uploader_username;
-        $fileModel->file_path = $filePath;
-        $fileModel->amount = $req->amount;
-        $fileModel->status = 'pending';
-        //logging
-        Log::info(json_encode($fileModel));
-        error_log(var_dump($fileModel));
-
-        $fileModel->save();
+        LogController::logging("FINISHED uploading ".$amount_of_files." files");
         return back()
-        ->with('success','File named '.$fileModel->name.' has been uploaded.');
+        ->with('success',$amount_of_files.' file(s) has been uploaded.');
     }
 
     /**

@@ -16,6 +16,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function dark()
+    {
+        return view('darkmodetoggle');
+    }
+
     public function user()
     {
         return view('testcustomuser');
