@@ -127,3 +127,4 @@
 [2023-05-01 06:25:15] local.INFO: filtering filename: "png"  
 [2023-05-01 06:25:15] local.INFO:   
 [2023-05-01 06:25:15] local.INFO: FINISHED uploading 2 files  
+[2023-05-03 08:59:28] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"8c684addc772c0db62c9d448c02208363e0e22df","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"a7a5e96b9d54289ed7540585f3469a64c01160d9"}  

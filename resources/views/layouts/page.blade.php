@@ -112,22 +112,51 @@
 
 
                 <form class="d-flex" role="search">
-                    @auth
-                        <ul class="navbar-nav me-auto mb-1 mb-md-0">
+                    <ul class="navbar-nav me-auto mb-1 mb-md-0">
+                        @auth
                             <li>
-                                <a class="nav-link disabled">Current user: {{ Auth::user()->username }}</a>
+                                <div class="form-check form-switch ms-auto">
+                                    <!-- LIGHT SWITCH -->
+                                    {{-- https://github.com/han109k/light-switch-bootstrap --}}
+                                    <label class="form-check-label ms-3" for="lightSwitch">
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="50"
+                                        height="50"
+                                        fill="white"
+                                        stroke="white"
+                                        viewBox="0 0 25 25"
+                                        preserveAspectRatio="xMinYMin meet"
+                                        {{-- This line causes some weird black line inside the moon SVG
+                                            class="bi bi-brightness-high" --}}
+                                        {{-- viewBox="0 0 16 16 0" --}}
+                                        >
+                                        {{-- moon SVG from https://www.svgrepo.com/svg/381328/weather-moon --}}
+                                        <path
+                                        d="M20.14,14.84a.58.58,0,0,0-.19,0H19.9l-.25.11h0a8.3,8.3,0,0,1-2.95.53A8.51,8.51,0,0,1,8.17,7a8,8,0,0,1,.39-2.5.79.79,0,0,0,.06-.22,1.1,1.1,0,0,0,0-.18,1,1,0,0,0-1-1,.86.86,0,0,0-.36.07h0L7,3.32A10,10,0,1,0,21,16.39a0,0,0,0,1,0,0l.09-.19a.75.75,0,0,0,0-.16,1.1,1.1,0,0,0,0-.18A1,1,0,0,0,20.14,14.84ZM12,20.5A8.5,8.5,0,0,1,6.83,5.26,9.29,9.29,0,0,0,6.67,7a10,10,0,0,0,12.4,9.71A8.54,8.54,0,0,1,12,20.5Z"
+                                        />
+                                        </svg>
+                                    </label>
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="lightSwitch"
+                                        style="height: 40px; width: 100px;"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link">Current user: {{ Auth::user()->username }}</a>
                             </li>
                             <li>
                                 <a class="btn btn-primary" href="{{ url('/auth/logout') }}" role="button">Log out</a>
                             </li>
-                        </ul>
-                    @else
-                        <ul class="navbar-nav me-auto mb-1 mb-md-0">
+                        @else
                             <li>
                                 <a class="btn btn-primary" href="{{ url('/auth/psu') }}" role="button">Log in with PSU Passport</a>
                             </li>
-                        </ul>
-                    @endauth
+                        @endauth
+                    </ul>
                 </form>
             </div>
             </div>
