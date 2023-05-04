@@ -97,7 +97,13 @@ class FileController extends Controller
     public function index()
     {
         $data = File::all()->where('username', Auth::user()->username);
-        return view('file.index', compact('data'));
+        $totalAmount = 0;
+        foreach ($data as $row) {
+            $totalAmount = $totalAmount + $row->amount;
+        }
+        $titleText = 'Your uploaded files';
+        $total = 'Total amount by you: '.$totalAmount;
+        return view('file.index', compact('data','titleText','total'));
     }
 
     /**

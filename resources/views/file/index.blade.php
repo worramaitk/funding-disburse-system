@@ -1,9 +1,3 @@
-<?php
-function echocell($string,$link,$class = "")
-{
-    echo '<td class="'.$class.' text-dark"><a href="'.url('/file/show',$link).'">'.$string.'</a></td>';
-}            ?>
-
 @extends('layouts.page')
 
 @section('title')
@@ -86,47 +80,17 @@ function echocell($string,$link,$class = "")
             }
         </style>
 
-        {{-- <div class="table-responsive">
-            <table class="table table-sm table-bordered border-dark table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>username</th>
-                        <th>amount</th>
-                        <th>status</th>
-                        <th>created_at</th>
-                        <th>updated_at</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data as $row)
-                        <tr>
-                            <?php
-                            // echocell($row->id,$row->id);
-                            // echocell($row->name,$row->id);
-                            // echocell($row->username,$row->id);
-                            // echocell($row->amount,$row->id);
-
-                            // echocell($row->created_at,$row->id);
-                            // echocell($row->updated_at,$row->id);
-                            ?>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div> --}}
         {{-- <div class="d-grid gap-3 mb-3"> --}}
         <div class="row">
             <div class="col-12">
-                <h1 class="pt-4 text-center">Your uploaded Files</h1>
-                <h2 class="text-center">Total amount of money:
+                <h1 class="pt-4 text-center">
                     <?php
-                        $totalamount = 0;
-                        foreach ($data as $row) {
-                            $totalamount = $totalamount + $row->amount;
-                        }
-                        echo $totalamount;
+                        echo $titleText;
+                    ?>
+                </h1>
+                <h2 class="text-center">
+                    <?php
+                        echo $total;
                     ?>
                 </h2>
             </div>
@@ -135,25 +99,19 @@ function echocell($string,$link,$class = "")
             foreach($data as $row){
             ?>
             <div class="col-md-6 col-lg-4">
+                <div class="card my-3
             <?php
             if($row->status == 'approved') {
-            ?>
-                <div class="card my-3 approved-card bg-light" style="width: 18rem;">
-            <?php
+                echo ' approved-card bg-light';
             } else if($row->status == 'denied') {
-            ?>
-                <div class="card my-3 denied-card bg-light" style="width: 18rem;">
-            <?php
+                echo ' denied-card bg-light';
             } else if($row->status == 'pending'){
-            ?>
-                <div class="card my-3 pending-card bg-light" style="width: 18rem;">
-            <?php
+                echo ' pending-card bg-light';
             } else {
-            ?>
-                <div class="card my-3" style="width: 18rem;">
-            <?php
+                echo ' bg-light';
             }
             ?>
+            " style="width: 18rem;">
                 <?php
                 $is_img = false;
                 $img_count = 0;

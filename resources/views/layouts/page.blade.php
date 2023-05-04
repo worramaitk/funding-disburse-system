@@ -100,7 +100,7 @@
                     {{-- me-2 from https://getbootstrap.com/docs/5.2/utilities/spacing/ --}}
                     {{-- code from https://laraveldaily.com/post/how-to-check-current-url-or-route --}}
                     @if (request()->is('home'))
-                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
+                        <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/home') }}">
                     @endif
@@ -108,7 +108,7 @@
                 </li>
                 <li class="nav-item">
                     @if (request()->is('file/create'))
-                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
+                        <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/create') }}">
                     @endif
@@ -116,12 +116,24 @@
                 </li>
                 <li class="nav-item">
                     @if (request()->is('file/index'))
-                        <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
+                        <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/index') }}">
                     @endif
                     Your files</a>
                 </li>
+                @auth
+                    @if(!(Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08"))
+                        <li class="nav-item">
+                            @if (request()->is('admin'))
+                                <a class="btn btn-success mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
+                            @else
+                                <a class="btn btn-success mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/admin') }}">
+                            @endif
+                            Admin</a>
+                        </li>
+                    @endif
+                @endauth
                 </ul>
 
 

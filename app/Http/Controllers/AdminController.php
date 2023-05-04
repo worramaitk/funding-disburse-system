@@ -92,7 +92,13 @@ class AdminController extends Controller
         }
 
         $data = File::all();
-        return view('file.index', compact('data'));
+        $totalAmount = 0;
+        foreach ($data as $row) {
+            $totalAmount = $totalAmount + $row->amount;
+        }
+        $titleText = 'All uploaded files';
+        $total = 'Total amount by everyone: '.$totalAmount;
+        return view('file.index', compact('data','titleText','total'));
     }
 
     /**
