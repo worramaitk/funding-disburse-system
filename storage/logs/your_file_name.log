@@ -128,3 +128,17 @@
 [2023-05-01 06:25:15] local.INFO:   
 [2023-05-01 06:25:15] local.INFO: FINISHED uploading 2 files  
 [2023-05-03 08:59:28] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"8c684addc772c0db62c9d448c02208363e0e22df","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"a7a5e96b9d54289ed7540585f3469a64c01160d9"}  
+[2023-05-03 14:42:53] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"b6d6a53ba7dfc9fd64aa9128c0c46215cd4a323a","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"1fefa3960242aec4190c5861c8488f956e65dcbd"}  
+[2023-05-04 04:20:59] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"0f105d204312312b39b6101feda2805a1705d660","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"c92dea2f4d2a1c848617a6ca69c5e00134c5a11a"}  
+[2023-05-04 06:03:42] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"099bfd2d7e7dd8722b36caad0a283ccf6b1a5d6d","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"9a2d524d0850d3987a7e2a25982ee1b4df97ba61"}  
+[2023-05-04 06:14:18] local.INFO: filtering filename: "Approve.example"  
+[2023-05-04 06:14:18] local.INFO: info to be updated: {"name":"approve.example.jpg","file_path":"6110110391\/1682922127\/jaHuNUZW\/approve.example.jpg","amount":"0"}  
+[2023-05-04 06:15:13] local.INFO: filtering filename: "approve.example"  
+[2023-05-04 06:15:13] local.INFO: info to be updated: {"name":"approve.example.png","file_path":"6110110391\/1682922128\/l7buL6yJ\/approve.example.png","amount":"0"}  
+[2023-05-04 06:18:59] local.INFO: filtering filename: "approved.example"  
+[2023-05-04 06:19:00] local.INFO: info to be updated: {"name":"approved.example.png","file_path":"6110110391\/1682922128\/l7buL6yJ\/approved.example.png","amount":"0"}  
+[2023-05-04 06:20:11] local.INFO: filtering filename: "denied.example"  
+[2023-05-04 06:20:11] local.INFO: info to be updated: {"name":"denied.example.png","file_path":"6110110391\/1682922257\/vWOAM96B\/denied.example.png","amount":"0"}  
+[2023-05-04 06:21:22] local.INFO: filtering filename: "pending.example"  
+[2023-05-04 06:21:22] local.INFO: info to be updated: {"name":"pending.example.png","file_path":"6110110391\/1682922315\/Ldq4VTNZ\/pending.example.png"}  
+[2023-05-04 07:47:46] local.INFO: returning user: {"username":"6110110391","first_name":"WORRAMAIT","last_name":"KOSITPAIBOON","staff_id":"6110110391","email":"mingmaomak@gmail.com","campus_id":"01","fac_id":"06","dept_id":"034","pos_id":"06","access_token":"7cf3f7103b4b17618cc08303c81e66ae75429d9b","expires_in":1800,"token_type":"Bearer","scope":"userinfo","refresh_token":"749d9b38c745b069cb7eaf5c6d0ab5dd6e9b9066"}  

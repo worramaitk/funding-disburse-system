@@ -7,7 +7,7 @@
 @section('main')
     <div class="container mt-5">
         <form action="{{ route('file-update',$data->id) }}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5"><br> Upload File</h3>
+          <h3 class="text-center mb-5"><br> Edit file info</h3>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -29,9 +29,9 @@
                 <input type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
                 <br>
                 <label for="amount">Amount of money for this receipt (if you choose to edit):</label>
-                <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
+                <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="" >
             </div>
-            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Upload Files</button>
+            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Edit info</button>
         </form>
     </div>
 @endsection

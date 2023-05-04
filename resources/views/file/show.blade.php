@@ -20,7 +20,7 @@
         ?>
     <a class="btn btn-primary" href="/file/download/{{$data->id}}" role="button">download</a>
     <a class="btn btn-primary" href="/file/destroy/{{$data->id}}" role="button">delete this file</a>
-    <a class="btn btn-warning" href="/admin/approve/{{$data->id}}" role="button">approve</a>
+    <a class="btn btn-success" href="/admin/approve/{{$data->id}}" role="button">approve</a>
     <a class="btn btn-danger" href="/admin/deny/{{$data->id}}" role="button">deny</a>
 
     <?php

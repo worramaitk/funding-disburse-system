@@ -92,7 +92,7 @@ class AdminController extends Controller
         }
 
         $data = File::all();
-        return view('admin.index', compact('data'));
+        return view('file.index', compact('data'));
     }
 
     /**
