@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ActivitiyLogController;
 use Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class PsuAuthController extends Controller
 
     public function auth()
     {
+        ActivitiyLogController::store('/auth/psu','GET');
         header('location: '.Config::get('oauthpsu.oauth_authorize_url').'?client_id='.Config::get('oauthpsu.client_id').'&redirect_uri='.Config::get('oauthpsu.redirect_uri').'&response_type=code&state='.md5(date('Y-m-d H:i:s')));
         die();
     }
@@ -115,6 +117,8 @@ class PsuAuthController extends Controller
     public function usertest(Request $req)
     {
         $t = json_decode($req->text);
+
+        LogController::logging('log in via usertest : '.json_encode($req->text));
         $user = User::where('username',$t->username)->first();
         if(!$user){
             $new_user = User::create([
@@ -136,12 +140,37 @@ class PsuAuthController extends Controller
             ]);
             $user = $new_user;
         } else {
-            return back()->withErrors(['field_name' => ['Error: That username is taken']]);
+            //return back()->withErrors(['field_name' => ['Error: That username is taken']]);
+            $new_info = [
+                'first_name'    => $t->first_name,
+                'last_name'     => $t->last_name,
+                'staff_id'      => $t->staff_id,
+                'email'         => $t->email,
+                'campus_id'     => $t->campus_id,
+                'fac_id'        => $t->fac_id,
+                'dept_id'       => $t->dept_id,
+                'pos_id'        => $t->pos_id,
+
+                'access_token'  => $t->access_token,
+                'expires_in'    => $t->expires_in,
+                'token_type'    => $t->token_type,
+                'scope'         => $t->scope,
+                'refresh_token' => $t->refresh_token,
+            ];
+            $user->update($new_info);
         }
         Auth::login($user);
         return redirect('/home');
     }
 
+    /**
+     *
+     * log out then redirect user to home page
+     * code based on:
+     * https://codeanddeploy.com/blog/laravel/laravel-8-logout-for-your-authenticated-user
+     *
+     * @return
+     */
     public function logout(){
         Session::flush();
         Auth::logout();

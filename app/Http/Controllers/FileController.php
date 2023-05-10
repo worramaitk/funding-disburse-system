@@ -302,5 +302,3 @@ class FileController extends Controller
         || !(Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08")) ;
     }
 }
-
-//code from https://codeanddeploy.com/blog/laravel/laravel-8-logout-for-your-authenticated-user

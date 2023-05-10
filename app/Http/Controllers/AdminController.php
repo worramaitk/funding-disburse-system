@@ -199,5 +199,3 @@ class AdminController extends Controller
         ->with('file', $new_info);
     }
 }
-
-//code from https://codeanddeploy.com/blog/laravel/laravel-8-logout-for-your-authenticated-user

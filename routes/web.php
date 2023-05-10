@@ -56,7 +56,7 @@ Route::post('/home/usertest',             [App\Http\Controllers\PsuAuthControlle
 Route::get ('/phpinfo',                   [App\Http\Controllers\HomeController::class         , 'phpinfo'     ])->name('phpinfo');
 Route::get ('/calendar/test',             [App\Http\Controllers\CalendarController::class     , 'test'        ])->name('calendar-test');
 Route::get ('/calendar/today',            [App\Http\Controllers\CalendarController::class     , 'today'       ])->name('calendar-today');
-Route::get ('/test/logging/{text}',       [App\Http\Controllers\PsuAuthController::class      , 'logging'     ])->name('loggingtest');
+Route::get ('/test/activitylog/{t}/{c}',  [App\Http\Controllers\ActivitiylogController::class , 'create'      ])->name('loggingtest');
 Route::get ('/test/dark',                 [App\Http\Controllers\HomeController::class         , 'dark'        ])->name('darktest');
 
 //routes that got redirected
