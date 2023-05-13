@@ -67,17 +67,47 @@
 
     /* Footer */
     .footer.bg-light {
-    background-color: rgb(240, 240, 240) !important;
-    /* border-radius: 3px; */
-    /* color: dimgray; */
-    /* text-decoration: underline; */
+        background-color: rgb(240, 240, 240) !important;
+        /* border-radius: 3px; */
+        /* color: dimgray; */
+        /* text-decoration: underline; */
     }
 
     .footer.bg-dark {
-    background-color: rgb(32, 32, 32) !important;
-    /* box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5); */
-    /* color: gainsboro; */
-    /* text-decoration: overline; */
+        background-color: rgb(32, 32, 32) !important;
+        /* box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5); */
+        /* color: gainsboro; */
+        /* text-decoration: overline; */
+    }
+
+    /* dropdown-menu */
+    .dropdown-menu.bg-light {
+        background-color: rgb(240, 240, 240) !important;
+        /* border-radius: 3px; */
+        color: black;
+        /* text-decoration: underline; */
+    }
+
+    .dropdown-menu.bg-dark {
+        background-color: rgb(32, 32, 32) !important;
+        /* box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5); */
+        color: white;
+        /* text-decoration: overline; */
+    }
+
+    /* dropdown-item */
+    .dropdown-item.bg-light {
+        background-color: rgb(240, 240, 240) !important;
+        /* border-radius: 3px; */
+        color: black;
+        /* text-decoration: underline; */
+    }
+
+    .dropdown-item.bg-dark {
+        background-color: rgb(32, 32, 32) !important;
+        /* box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5); */
+        color: white;
+        /* text-decoration: overline; */
     }
     </style>
 
@@ -104,17 +134,33 @@
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/home') }}">
                     @endif
-                    Home</a>
-                </li>
-                <li class="nav-item">
+                    <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="37"
+                                    height="37"
+                                    fill="white"
+                                    stroke="white"
+                                    viewBox="1 1 20 20"
+                                    preserveAspectRatio="xMinYMin meet"
+                                    {{-- Without “home” style="margin-top: -0.5rem !important; margin-left: -0.5rem !important; margin-right: -0.65rem !important;" --}}
+                                    style="margin-top: -0.95rem !important; margin-bottom: -0.5rem !important; margin-left: -0.5rem !important; margin-right: -0.3rem !important;"
+                                    {{-- This line causes some weird black line inside the moon SVG
+                                        class="bi bi-brightness-high" --}}
+                                    >
+                                    {{-- moon SVG from https://www.svgrepo.com/svg/381328/weather-moon --}}
+                                    <path d="M19.0167 7.1419C19.6261 7.50161 20 8.15658 20 8.86423V18.0001C20 19.1047 19.1046 20.0001 18 20.0001H16C14.8954 20.0001 14 19.1047 14 18.0001V14C14 12.8955 13.1046 12 12 12V12C10.8954 12 10 12.8955 10 14V18.0001C10 19.1047 9.10457 20.0001 8 20.0001H6C4.89543 20.0001 4 19.1047 4 18.0001V8.86423C4 8.15658 4.37395 7.50161 4.98335 7.1419L10.9833 3.60023C11.6106 3.23 12.3894 3.23 13.0167 3.60023L19.0167 7.1419Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                                    </svg> </a>
+                {{-- </li>
+                <li class="nav-item"> --}}
                     @if (request()->is('file/create'))
                         <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/create') }}">
                     @endif
                     Upload new file</a>
-                </li>
-                <li class="nav-item">
+                {{-- </li>
+                <li class="nav-item"> --}}
                     @if (request()->is('file/index'))
                         <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
                     @else
@@ -171,10 +217,15 @@
                         </li>
                         @auth
                         <li>
-                            <a class="btn btn-secondary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">Current user: {{ Auth::user()->username }}</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-primary mt-1 mb-1 me-2" href="{{ url('/auth/logout') }}" role="button">Log out</a>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Current user: {{ Auth::user()->username }}
+                            </button>
+                            <ul class="dropdown-menu bg-light" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item bg-light" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">User information</a></li>
+                              <li><a class="dropdown-item bg-light" href="{{ url('/auth/logout') }}">Log out</a></li>
+                            </ul>
+                          </div>
                         </li>
                         @else
                         <li>
@@ -191,7 +242,53 @@
 <!-- Begin page content -->
 {{-- <main class="flex-shrink-0 h-75"> --}}
 <main role="main" class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-light">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    @auth
+                        User information
+                    @else
+                        You're not logged in!
+                    @endauth</h5>
+                <!-- x shaped close button, we don't need it as there's already another close button in the footer -->
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  -->
+                </div>
+                <div class="modal-body">
+                    @auth
+                    <p>
+                        username:       {{ Auth::user()->username       }}<br>
+                        first_name:     {{ Auth::user()->first_name     }}<br>
+                        last_name:      {{ Auth::user()->last_name      }}<br>
+                        staff_id:       {{ Auth::user()->staff_id       }}<br>
+                        email:          {{ Auth::user()->email          }}<br>
+                        campus_id:      {{ Auth::user()->campus_id      }}<br>
+                        fac_id:         {{ Auth::user()->fac_id         }}<br>
+                        dept_id:        {{ Auth::user()->dept_id        }}<br>
+                        pos_id:         {{ Auth::user()->pos_id         }}<br>
+                        access_token:   {{ Auth::user()->access_token   }}<br>
+                        expires_in:     {{ Auth::user()->expires_in     }}<br>
+                        token_type:     {{ Auth::user()->token_type     }}<br>
+                        scope:          {{ Auth::user()->scope          }}<br>
+                        refresh_token:  {{ Auth::user()->refresh_token  }}<br>
+                    </p>
+                @else
+                    <p>Please log in first!</p>
+                @endauth
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @yield('main')
+
 </main>
 
 <!-- Footer ; "float-start" adjust text to the left while "float-end" adjust text to the right -->
@@ -200,6 +297,12 @@
     <div class="container">
         <p class="float-start">© 2023 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยสงขลานครินทร์ </p>
         <p class="float-end">
+            @if (request()->is('licenses'))
+                <a class="btn btn-primary mt-1 mb-1 me-2 disabled" role="button" aria-disabled="true">
+            @else
+                <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/licenses') }}">
+            @endif
+            open source licenses</a>
             <a class="btn btn-success mt-1 mb-1 me-2" href="https://oauth2.eng.psu.ac.th/policies/privacy">นโยบายความเป็นส่วนตัว</a>
             <a class="btn btn-success mt-1 mb-1 me-2"href="https://oauth2.eng.psu.ac.th/policies/terms">ข้อกำหนดในการให้บริการ</a></p>
     </div>

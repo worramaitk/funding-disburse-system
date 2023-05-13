@@ -30,7 +30,7 @@
 
                 <br>
                 <label for="amount">text: </label>
-                <textarea type="text" id="text" name="text" class="border-gray-500 border-2" value="0" ></textarea>
+                <textarea type="text" id="text" name="text" class="border-gray-500 border-2" value="" ></textarea>
 
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Log in as a custom user</button>

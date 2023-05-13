@@ -84,15 +84,18 @@ class ActivitiylogController extends Controller
 
     public function index()
     {
-        if ( !Auth::user() ) {
-            return abort('403', 'You are not logged in!');
-        }
-        if ( !$this->check_rights(0) ) {
-            return abort('403', 'You are not an admin!');
-        }
-
         $data = ActivityLog::all();
-        return view('loghistory', compact('data'));
+
+        //https://stackoverflow.com/questions/52940999/how-to-write-to-a-txt-file-in-laravel
+        try {
+            $attemptToWriteText = "Hi";
+            //https://stackoverflow.com/questions/6054033/pretty-printing-json-with-php
+            Storage::put('log.log', json_encode($data, JSON_PRETTY_PRINT));
+            Storage::put('hi.txt', $attemptToWriteText);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return Storage::download('log.log');
     }
 
     /**

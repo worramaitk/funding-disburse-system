@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivitiylogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,12 +22,13 @@ Auth::routes();
 // show - Show single listing
 // create - Show form to create new listing
 // store - Store new listing
-// edit - Show form to edit listing -- TODO
-// update - Update listing          -- TODO
-// destroy - Delete listing         -- TODO
+// edit - Show form to edit listing
+// update - Update listing
+// destroy - Delete listing
 
 //home routes
 Route::get ('/home',                      [App\Http\Controllers\HomeController::class         , 'index'       ])->name('home');
+Route::get ('/licenses',                  [App\Http\Controllers\HomeController::class         , 'licenses'    ])->name('licenses');
 
 Route::get ('/file/create',               [App\Http\Controllers\FileController::class         , 'create'      ])->name('file-create');
 Route::get ('/file/destroy/{id}',         [App\Http\Controllers\FileController::class         , 'destroy'     ])->name('file-destroy');
@@ -42,6 +44,9 @@ Route::post('/file/update/{id}',          [App\Http\Controllers\FileController::
 Route::get ('/admin',                     [App\Http\Controllers\AdminController::class        , 'index'       ])->name('admin');
 Route::get ('/admin/approve/{id}',        [App\Http\Controllers\AdminController::class        , 'approve'     ])->name('admin-approve');
 Route::get ('/admin/deny/{id}',           [App\Http\Controllers\AdminController::class        , 'deny'        ])->name('admin-deny');
+Route::get ('/admin/log',                 [App\Http\Controllers\ActivitiylogController::class , 'index'       ])->name('admin-log');
+Route::post('/admin/announce',            [App\Http\Controllers\AdminController::class        , 'announce'    ])->name('announce');
+Route::get ('/admin/del',                 [App\Http\Controllers\AdminController::class        , 'del'         ])->name('announce-del');
 
 //auth routes
 Route::get ('/auth/psu',                  [App\Http\Controllers\PsuAuthController::class      , 'auth'        ])->name('auth-PsuPassport');
@@ -57,8 +62,7 @@ Route::get ('/phpinfo',                   [App\Http\Controllers\HomeController::
 Route::get ('/calendar/test',             [App\Http\Controllers\CalendarController::class     , 'test'        ])->name('calendar-test');
 Route::get ('/calendar/today',            [App\Http\Controllers\CalendarController::class     , 'today'       ])->name('calendar-today');
 Route::get ('/test/activitylog/{t}/{c}',  [App\Http\Controllers\ActivitiylogController::class , 'create'      ])->name('loggingtest');
-Route::get ('/test/dark',                 [App\Http\Controllers\HomeController::class         , 'dark'        ])->name('darktest');
 
 //routes that got redirected
-Route::get ('',                           function(){ return redirect('/home');                           });
-Route::get ('/secret',                    function(){ return redirect('https://youtu.be/dQw4w9WgXcQ');    });
+Route::get ('',                 function(){ ActivitiylogController::store('/','GET');       return redirect('/home');                         });
+Route::get ('/secret',          function(){ ActivitiylogController::store('/secret','GET'); return redirect('https://youtu.be/dQw4w9WgXcQ');  });

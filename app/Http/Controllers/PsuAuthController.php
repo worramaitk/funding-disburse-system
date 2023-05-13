@@ -19,13 +19,14 @@ class PsuAuthController extends Controller
 
     public function auth()
     {
-        ActivitiyLogController::store('/auth/psu','GET');
+        ActivitiylogController::store('/auth/psu','GET');
         header('location: '.Config::get('oauthpsu.oauth_authorize_url').'?client_id='.Config::get('oauthpsu.client_id').'&redirect_uri='.Config::get('oauthpsu.redirect_uri').'&response_type=code&state='.md5(date('Y-m-d H:i:s')));
         die();
     }
 
     public function callback()
     {
+        ActivitiylogController::store('/auth/psu/callback','GET','code: '.trim($_REQUEST['code']));
         //get $data as data related to access token and $userinfo for user information
         $code = trim($_REQUEST['code']);
         if($code==''){
@@ -62,8 +63,6 @@ class PsuAuthController extends Controller
             $userinfo = array_merge($userinfo, $data);
         }
 
-        //LogController::logging('$userinfo: '.json_encode($userinfo));
-
         $user = User::where('username',$userinfo["username"])->first();
 
         //create new user if their username is not in our system already
@@ -86,7 +85,7 @@ class PsuAuthController extends Controller
                 'refresh_token' => $userinfo["refresh_token"],
             ]);
             $user = $new_user;
-            LogController::logging('new user      : '.json_encode($userinfo));
+            ActivitiylogController::store('/auth/psu/callback','GET','new user: '.$userinfo["username"]);
         } else {
             $new_info = [
                 'first_name'    => $userinfo["first_name"],
@@ -105,7 +104,7 @@ class PsuAuthController extends Controller
                 'refresh_token' => $userinfo["refresh_token"],
             ];
             $user->update($new_info);
-            LogController::logging('returning user: '.json_encode($userinfo));
+            ActivitiylogController::store('/auth/psu/callback','GET','returning user: '.$userinfo["username"]);
         }
 
         //https://stackoverflow.com/questions/48859424/laravel-session-expire-time-for-each-session

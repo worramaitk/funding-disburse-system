@@ -46,13 +46,12 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete the announcement
+     * create new/update the existing announcement
      *
      * @return
      */
-    public function destroy($id)
+    public function announce(Request $req)
     {
-        $data = Announcement::find($id);
         if ( !Auth::user() ) {
             return abort('403', 'You are not logged in!');
         }
@@ -60,7 +59,51 @@ class AdminController extends Controller
             return abort('403', 'You don\'t have access to this feature.');
         }
 
-        $data->delete();
+        $data = Announcement::first();
+
+        if(!$data){
+            $announcementModel =  new Announcement;
+
+            $announcementModel->username = Auth::user()->username;
+            $announcementModel->title = $req->title;
+            $announcementModel->text = $req->text;
+
+            $announcementModel->save();
+            $word = 'created';
+        } else {
+            $new_info = [];
+
+            $new_info['username'] = Auth::user()->username;
+            $new_info['title'] = $req->title;
+            $new_info['text'] = $req->text;
+
+            $data->update($new_info);
+            $word = 'updated';
+        }
+        return back()->with('success', 'announcement '.$word.' successfully');
+    }
+
+    /**
+     * create new/update the existing announcement
+     *
+     * @return
+     */
+    public function del(Request $req)
+    {
+        if ( !Auth::user() ) {
+            return abort('403', 'You are not logged in!');
+        }
+        if ( !$this->check_rights(0) ) {
+            return abort('403', 'You don\'t have access to this feature.');
+        }
+
+        $data = Announcement::first();
+
+        if(!$data){
+            return back()->with('success', 'There was no announcement to delete.');
+        } else {
+            $data->delete();
+        }
         return back()->with('success', 'announcement deleted successfully');
     }
 
