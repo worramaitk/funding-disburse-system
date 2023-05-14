@@ -8,11 +8,11 @@ class CreateActivitylogsTable extends Migration
     {
         Schema::create('activitylogs', function (Blueprint $table) {
             $table->id();
-            $table->string('route')->nullable();
-            $table->string('action')->nullable();
+            $table->longText('route')->nullable();
+            $table->longText('action')->nullable();
             $table->boolean('loggedin');
-            $table->string('username')->nullable();
-            $table->string('comment')->nullable();
+            $table->longText('username')->nullable();
+            $table->longText('comment')->nullable();
             $table->timestamps();
         });
     }

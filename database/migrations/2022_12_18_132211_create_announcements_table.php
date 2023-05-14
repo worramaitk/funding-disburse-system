@@ -9,8 +9,8 @@ class CreateAnnouncementsTable extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->string('username')->nullable();
-            $table->string('title')->nullable();
-            $table->string('text')->nullable();
+            $table->longText('title')->nullable();
+            $table->longText('text')->nullable();
             $table->timestamps();
         });
     }

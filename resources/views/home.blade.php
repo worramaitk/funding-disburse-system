@@ -6,17 +6,17 @@
 
 @section('main')
 <div class="container">
-    <h1 class="mt-5">Announcement</h1>
+    <h1 class="mt-5"> ประกาศ </h1>
     <?php
     if($announcementexists){
     ?>
         <p class="lead">{{$title}}</p>
         <p>{{$text}}</p>
-        <p class="lead">Created at: {{$createdat}} by: {{$username}} , Last updated at: {{$updatedat}}</p>
+        <p class="lead">สร้างเมื่อ: {{$createdat}} โดย: {{$username}} , แก้ไขครั้งสุดท้ายเมื่อ: {{$updatedat}}</p>
     <?php
     } else {
     ?>
-        <p class="lead">There is currently no announcements.</p>
+        <p class="lead">ขณะนี้ยังไม่มีประกาศ</p>
     <?php
         }
     ?>
@@ -27,7 +27,7 @@
 
             <div class="container mt-5">
                 <form action="{{ route('announce') }}" method="post" enctype="multipart/form-data">
-                  <h1 class="text-center mb-5">Create/update annoucement</h1>
+                  <h1 class="text-center mb-5">เพิ่ม/แก้ไขประกาศ</h1>
                     @csrf
                     @if ($message = Session::get('success'))
                     <div class="alert alert-success">
@@ -44,17 +44,18 @@
                     </div>
                   @endif
                     <div class="custom-file">
-                        <label for="amount">Title:</label>
-                        <input type="text" id="title" name="title" class="border-gray-500 border-2" value="{{$title}}" >
+                        <label for="amount">หัวข้อ:</label>
+                        <input type="text" class="form-control bg-light" id="title" name="title" class="border-gray-500 border-2" value="{{$title}}" >
                         <br>
-                        <label for="amount">Text: </label>
-                        <textarea type="text" id="text" name="text" class="border-gray-500 border-2" value="" >{{$text}}</textarea>
+                        <label for="amount">เนื้อหา: </label>
+                        <textarea type="text" class="form-control bg-light" id="text" name="text" class="border-gray-500 border-2" value="" >{{$text}}</textarea>
                     </div>
-                    <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Create/update annoucement</button>
+                    <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">เพิ่ม/แก้ไขประกาศ</button>
+                    <a class="btn btn-block mt-4 btn-danger" href="/admin/del" role="button">ลบประกาศออก</a>
                 </form>
             </div>
 
-            <a class="btn p-1 btn-danger" href="/admin/del" role="button">Delete/reset announcement</a>
+
         @endif
     @endauth
 </div>

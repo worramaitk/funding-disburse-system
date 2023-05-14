@@ -8,8 +8,8 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('file_path')->nullable();
+            $table->longText('name')->nullable();
+            $table->longText('file_path')->nullable();
             $table->string('username')->nullable();
             $table->decimal('amount', 10, 3);
             $table->enum('status', ['approved', 'denied', 'pending']);

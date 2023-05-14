@@ -1,13 +1,13 @@
 @extends('layouts.page')
 
 @section('title')
-<title>Upload new file</title>
+<title>แก้ไขข้อมูล</title>
 @endsection
 
 @section('main')
     <div class="container mt-5">
         <form action="{{ route('file-update',$data->id) }}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5"><br> Edit file info</h3>
+          <h3 class="text-center mb-5">แก้ไขข้อมูล</h3>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -25,13 +25,13 @@
           @endif
             <div class="custom-file">
                 <br>
-                <label for="amount">File name (if you choose to rename):</label>
-                <input type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
+                <label for="amount">ตั้งชื่อไฟล์ใหม่ ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนชื่อไฟล์:</label>
+                <input class="form-control bg-light" type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
                 <br>
-                <label for="amount">Amount of money for this receipt (if you choose to edit):</label>
-                <input type="text" id="amount" name="amount" class="border-gray-500 border-2" value="" >
+                <label for="amount">กำหนดปริมาณเงินใหม่ ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนปริมาณเงิน:</label>
+                <input class="form-control bg-light" type="text" id="amount" name="amount" class="border-gray-500 border-2" value="" >
             </div>
-            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">Edit info</button>
+            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">แก้ไขข้อมูล</button>
         </form>
     </div>
 @endsection

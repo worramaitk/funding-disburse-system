@@ -109,6 +109,21 @@
         color: white;
         /* text-decoration: overline; */
     }
+
+    /* form-control */
+    .form-control.bg-light {
+        background-color: white !important;
+        /* border-radius: 3px; */
+        color: black;
+        /* text-decoration: underline; */
+    }
+
+    .form-control.bg-dark {
+        background-color: black !important;
+        /* box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5); */
+        color: white;
+        /* text-decoration: overline; */
+    }
     </style>
 
     <!-- Custom styles for this template -->
@@ -158,7 +173,7 @@
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/create') }}">
                     @endif
-                    Upload new file</a>
+                    อัปโหลดใบเสร็จ</a>
                 {{-- </li>
                 <li class="nav-item"> --}}
                     @if (request()->is('file/index'))
@@ -166,7 +181,7 @@
                     @else
                         <a class="btn btn-primary mt-1 mb-1 me-2" role="button" aria-current="page" href="{{ url('/file/index') }}">
                     @endif
-                    Your files</a>
+                    ใบเสร็จทั้งหมดของคุณ</a>
                 </li>
                 @auth
                     @if(!(Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08"))
