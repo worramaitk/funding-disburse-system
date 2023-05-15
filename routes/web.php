@@ -45,8 +45,9 @@ Route::get ('/admin',                     [App\Http\Controllers\AdminController:
 Route::get ('/admin/approve/{id}',        [App\Http\Controllers\AdminController::class        , 'approve'     ])->name('admin-approve');
 Route::get ('/admin/deny/{id}',           [App\Http\Controllers\AdminController::class        , 'deny'        ])->name('admin-deny');
 Route::get ('/admin/log',                 [App\Http\Controllers\ActivitiylogController::class , 'index'       ])->name('admin-log');
-Route::post('/admin/announce',            [App\Http\Controllers\AdminController::class        , 'announce'    ])->name('announce');
-Route::get ('/admin/del',                 [App\Http\Controllers\AdminController::class        , 'del'         ])->name('announce-del');
+Route::post('/admin/store/',              [App\Http\Controllers\AdminController::class        , 'store'       ])->name('admin-store');
+Route::post('/admin/update/{id}',         [App\Http\Controllers\AdminController::class        , 'update'      ])->name('admin-update');
+Route::get ('/admin/destroy/{id}',        [App\Http\Controllers\AdminController::class        , 'destroy'     ])->name('admin-destroy');
 
 //auth routes
 Route::get ('/auth/psu',                  [App\Http\Controllers\PsuAuthController::class      , 'auth'        ])->name('auth-PsuPassport');

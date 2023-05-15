@@ -166,3 +166,19 @@
 [2023-05-12 09:26:00] local.INFO: log in via usertest : "{\"username\":\"admin91\",\"first_name\":\"WORRAMAIT\",\"last_name\":\"KOSITPAIBOON\",\"staff_id\":\"6110110391\",\"email\":\"mingmaomak@gmail.com\",\"campus_id\":\"01\",\"fac_id\":\"06\",\"dept_id\":\"034\",\"pos_id\":\"10\",\"access_token\":\"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a\",\"expires_in\":1800,\"token_type\":\"Bearer\",\"scope\":\"userinfo\",\"refresh_token\":\"b1abac663d80625ccc1ee0a84539d670ceca76ad\"}"  
 [2023-05-14 03:58:35] local.INFO: log in via usertest : "{\"username\":\"admin91\",\"first_name\":\"WORRAMAIT\",\"last_name\":\"KOSITPAIBOON\",\"staff_id\":\"6110110391\",\"email\":\"mingmaomak@gmail.com\",\"campus_id\":\"01\",\"fac_id\":\"06\",\"dept_id\":\"034\",\"pos_id\":\"10\",\"access_token\":\"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a\",\"expires_in\":1800,\"token_type\":\"Bearer\",\"scope\":\"userinfo\",\"refresh_token\":\"b1abac663d80625ccc1ee0a84539d670ceca76ad\"}"  
 [2023-05-14 04:44:10] local.INFO: log in via usertest : "{\"username\":\"admin91\",\"first_name\":\"WORRAMAIT\",\"last_name\":\"KOSITPAIBOON\",\"staff_id\":\"6110110391\",\"email\":\"mingmaomak@gmail.com\",\"campus_id\":\"01\",\"fac_id\":\"06\",\"dept_id\":\"034\",\"pos_id\":\"10\",\"access_token\":\"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a\",\"expires_in\":1800,\"token_type\":\"Bearer\",\"scope\":\"userinfo\",\"refresh_token\":\"b1abac663d80625ccc1ee0a84539d670ceca76ad\"}"  
+[2023-05-15 05:56:34] local.INFO: uploading 3 files  
+[2023-05-15 05:56:34] local.INFO: filtering filename: "Flutter_logo.png"  
+[2023-05-15 05:56:34] local.INFO:   
+[2023-05-15 05:56:34] local.INFO: filtering filename: "Pepsi_Lays_6165.webp"  
+[2023-05-15 05:56:34] local.INFO:   
+[2023-05-15 05:56:34] local.INFO: filtering filename: "pngwing.com.png"  
+[2023-05-15 05:56:34] local.INFO:   
+[2023-05-15 05:56:34] local.INFO: FINISHED uploading 3 files  
+[2023-05-15 05:56:54] local.INFO: uploading 2 files  
+[2023-05-15 05:56:54] local.INFO: filtering filename: "Sunflower.png"  
+[2023-05-15 05:56:54] local.INFO:   
+[2023-05-15 05:56:54] local.INFO: filtering filename: "Sunflower_Helianthus_1_edited.png"  
+[2023-05-15 05:56:54] local.INFO:   
+[2023-05-15 05:56:54] local.INFO: FINISHED uploading 2 files  
+[2023-05-15 07:38:31] local.INFO: log in via usertest : "{\"username\":\"admin91\",\"first_name\":\"WORRAMAIT\",\"last_name\":\"KOSITPAIBOON\",\"staff_id\":\"6110110391\",\"email\":\"mingmaomak@gmail.com\",\"campus_id\":\"01\",\"fac_id\":\"06\",\"dept_id\":\"034\",\"pos_id\":\"10\",\"access_token\":\"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a\",\"expires_in\":1800,\"token_type\":\"Bearer\",\"scope\":\"userinfo\",\"refresh_token\":\"b1abac663d80625ccc1ee0a84539d670ceca76ad\"}"  
+[2023-05-15 17:47:31] local.INFO: log in via usertest : "{\"username\":\"admin91\",\"first_name\":\"WORRAMAIT\",\"last_name\":\"KOSITPAIBOON\",\"staff_id\":\"6110110391\",\"email\":\"mingmaomak@gmail.com\",\"campus_id\":\"01\",\"fac_id\":\"06\",\"dept_id\":\"034\",\"pos_id\":\"10\",\"access_token\":\"fb245c4e018d59b77fbb6cfa00b7acc3aa2eeb1a\",\"expires_in\":1800,\"token_type\":\"Bearer\",\"scope\":\"userinfo\",\"refresh_token\":\"b1abac663d80625ccc1ee0a84539d670ceca76ad\"}"  

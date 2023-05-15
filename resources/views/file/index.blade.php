@@ -98,6 +98,9 @@
             <?php
             foreach($data as $row){
             ?>
+
+
+
             <div class="col-md-6 col-lg-4">
                 <div class="card my-3
             <?php
@@ -129,7 +132,7 @@
                 ?>
                     <div class="card-body">
                         <h5 class="card-title">{{$row->name}}</h5>
-                        <p class="card-text">id: {{$row->id}} <br> username: {{$row->username}} <br> ปริมาณเงิน: {{$row->amount}} <br> created_at: {{$row->created_at}} <br> updated_at: {{$row->updated_at}} status: {{$row->status}}</p>
+                        <p class="card-text">id: {{$row->id}} <br> username: {{$row->username}} <br> ปริมาณเงิน(฿): {{$row->amount}} <br> created_at: {{$row->created_at}} <br> updated_at: {{$row->updated_at}} status: {{$row->status}}</p>
                         <a class="btn p-1 btn-primary" href="/file/edit/{{$row->id}}" role="button">แก้ไข</a>
                         <a class="btn p-1 btn-primary" href="/file/serve/{{$row->id}}" role="button">ดูไฟล์นี้เปล่าๆ</a>
                         <a class="btn p-1 btn-primary" href="/file/download/{{$row->id}}" role="button">ดาวน์โหลด</a>
@@ -149,9 +152,11 @@
                 </div>
             </div>
             <?php
-            } //closing for each statement
+            } //closing “foreach($data as $row)” statement
             ?>
-
-
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
+                {!! $data->links() !!}
+            </div>
 
 @endsection

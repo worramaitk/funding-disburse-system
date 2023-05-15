@@ -28,7 +28,7 @@
                 <label for="amount">ตั้งชื่อไฟล์ใหม่ ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนชื่อไฟล์:</label>
                 <input class="form-control bg-light" type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
                 <br>
-                <label for="amount">กำหนดปริมาณเงินใหม่ ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนปริมาณเงิน:</label>
+                <label for="amount">กำหนดปริมาณเงินใหม่ (฿) ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนปริมาณเงิน:</label>
                 <input class="form-control bg-light" type="text" id="amount" name="amount" class="border-gray-500 border-2" value="" >
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">แก้ไขข้อมูล</button>

@@ -96,7 +96,8 @@ class FileController extends Controller
      */
     public function index()
     {
-        $data = File::all()->where('username', Auth::user()->username);
+        // $data = File::all()->where('username', Auth::user()->username)->paginate(3);
+        $data = File::where('username', Auth::user()->username)->paginate(3);
         $totalAmount = 0;
         foreach ($data as $row) {
             $totalAmount = $totalAmount + $row->amount;

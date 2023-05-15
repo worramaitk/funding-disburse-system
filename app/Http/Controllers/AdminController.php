@@ -50,7 +50,7 @@ class AdminController extends Controller
      *
      * @return
      */
-    public function announce(Request $req)
+    public function update(Request $req, $id)
     {
         if ( !Auth::user() ) {
             return abort('403', 'You are not logged in!');
@@ -59,28 +59,17 @@ class AdminController extends Controller
             return abort('403', 'You don\'t have access to this feature.');
         }
 
-        $data = Announcement::first();
+        $data = Announcement::find($id);
 
-        if(!$data){
-            $announcementModel =  new Announcement;
+        $new_info = [];
 
-            $announcementModel->username = Auth::user()->username;
-            $announcementModel->title = $req->title;
-            $announcementModel->text = $req->text;
+        $new_info['username'] = Auth::user()->username;
+        $new_info['title'] = $req->title;
+        $new_info['text'] = $req->text;
 
-            $announcementModel->save();
-            $word = 'created';
-        } else {
-            $new_info = [];
+        $data->update($new_info);
 
-            $new_info['username'] = Auth::user()->username;
-            $new_info['title'] = $req->title;
-            $new_info['text'] = $req->text;
-
-            $data->update($new_info);
-            $word = 'updated';
-        }
-        return back()->with('success', 'announcement '.$word.' successfully');
+        return back()->with('success', 'announcement updated successfully');
     }
 
     /**
@@ -134,7 +123,7 @@ class AdminController extends Controller
             return abort('403', 'You are not an admin!');
         }
 
-        $data = File::all();
+        $data = File::paginate(3);
         $totalAmount = 0;
         foreach ($data as $row) {
             $totalAmount = $totalAmount + $row->amount;
@@ -158,15 +147,15 @@ class AdminController extends Controller
             return abort('403', 'You are not an admin!');
         }
 
-        $announcementModel = new Announcement;
+        $announcementModel =  new Announcement;
+
+        $announcementModel->username = Auth::user()->username;
         $announcementModel->title = $req->title;
         $announcementModel->text = $req->text;
-        $announcementModel->user_id = Auth::user()->username;
 
         $announcementModel->save();
 
-        //Fun fact: Earth orbits the Sun at an average distance of 149.60 million km (92.96 million mi)
-        LogController::logging(var_dump($announcementModel));
+        ActivitiylogController::store('/admin/store','POST',var_dump($announcementModel));
         return back()
         ->with('success','created an announcement.');
     }
@@ -176,26 +165,18 @@ class AdminController extends Controller
      *
      * @return
      */
-    public function update(Request $req, $id)
+    public function destroy(Request $req, $id)
     {
-        $announcementModel = Announcement::find($id);
         if ( !Auth::user() ) {
             return abort('403', 'You are not logged in!');
         }
         if ( !$this->check_rights(0) ) {
-            return abort('403', 'You are not an admin!');
+            return abort('403', 'You don\'t have access to this feature.');
         }
-        $new_info = [];
-        $new_info['title'] = $req->title;
-        $new_info['text'] = $req->text;
 
-        LogController::logging('info to be updated: '.json_encode($new_info));
-        $announcementModel->update($new_info);
-
-        //Fun fact: Earth orbits the Sun at an average distance of 149.60 million km (92.96 million mi)
-        LogController::logging(var_dump($announcementModel));
-        return back()
-        ->with('success','created an announcement.');
+        $data = Announcement::find($id);
+        $data->delete();
+        return back()->with('message', 'File deleted successfully');
     }
 
     public function approve($id)

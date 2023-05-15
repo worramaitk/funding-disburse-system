@@ -12,31 +12,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        ActivitiylogController::store('/home','GET');
-        $data = Announcement::first();
-        $username = '';
-        $title = '';
-        $text = '';
-        $createdat = '';
-        $updatedat = '';
-        $announcementexists = false;
+        $data = Announcement::all();
         if(!$data){
-            $announcementexists = false;
+            $announcementDoesNotExist = true;
+            ActivitiylogController::store('/home','GET','there are zero announcement(s)');
         } else {
-            $announcementexists = true;
-            $username = $data->username;
-            $title = $data->title;
-            $text = $data->text;
-            $createdat = $data->created_at;
-            $updatedat = $data->updated_at;
+            ActivitiylogController::store('/home','GET','there are '.count($data).' announcement(s)');
+            if(count($data) == 0){
+            } else {
+                $announcementDoesNotExist = false;
+            }
         }
-        return view('home', compact('announcementexists','username','title','text','createdat','updatedat'));
+        return view('home', compact('announcementDoesNotExist','data'));
     }
 
 
     public function user()
     {
-        ActivitiylogController::store('/home','GET');
+        ActivitiylogController::store('/home/usertest','GET');
         return view('testcustomuser');
     }
 

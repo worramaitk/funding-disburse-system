@@ -30,7 +30,7 @@
                 <label for="amount">ตั้งชื่อไฟล์ใหม่ ถ้าเว้นช่องนี้ว่างจะไม่มีการเปลี่ยนชื่อไฟล์ (ถ้าเลือกอัปโหลดหลายไฟล์พร้อมกันจะเปลี่ยนชื่อไฟล์ทั้งหมด):</label>
                 <input class="form-control bg-light" type="text" id="name" name="name" class="border-gray-500 border-2" value="" >
                 <br>
-                <label for="amount">กำหนดปริมาณเงิน (ถ้าเลือกอัปโหลดหลายไฟล์พร้อมกันจะทุกไฟล์จะมีจำนวนเงินเท่ากันทั้งหมด):</label>
+                <label for="amount">กำหนดปริมาณเงิน (฿) (ถ้าเลือกอัปโหลดหลายไฟล์พร้อมกันจะทุกไฟล์จะมีจำนวนเงินเท่ากันทั้งหมด):</label>
                 <input class="form-control bg-light" type="text" id="amount" name="amount" class="border-gray-500 border-2" value="0" >
             </div>
             <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">อัปโหลดข้อมูล</button>
