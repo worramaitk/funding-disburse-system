@@ -23,7 +23,7 @@
     }
     ?>
 
-    <!-- Admin can manipulate announcements -->
+    <!-- Admin can manipulate existing announcements -->
     @auth
         @if(!(Auth::user()->pos_id == "06" || Auth::user()->pos_id == "07" || Auth::user()->pos_id ==  "08"))
         <h1 class="mb-5">แก้ไขประกาศ</h1>
