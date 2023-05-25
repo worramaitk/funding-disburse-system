@@ -108,6 +108,9 @@ End license text.<br></p>
         <a class="btn btn-success mt-1 mb-1 me-2" href="https://www.svgrepo.com/page/licensing#CC%20Attribution">SVG Repo License</a>
         <a class="btn btn-success mt-1 mb-1 me-2" href="https://www.svgrepo.com/svg/381328/weather-moon">Weather Moon SVG Vector</a>
         <a class="btn btn-success mt-1 mb-1 me-2" href="https://www.svgrepo.com/svg/488999/home-1">Home 1 SVG Vector</a>
+        <p class="lead">MySQL version 8.0</p>
+        <a class="btn btn-success mt-1 mb-1 me-2" href="http://dev.mysql.com/">MySQL website</a>
+        <a class="btn btn-success mt-1 mb-1 me-2" href="https://github.com/mysql/mysql-server/blob/8.0/LICENSE">MySQL license</a>
     </div>
 @endsection
 
