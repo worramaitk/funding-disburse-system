@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+//use ZipArchive;
 
 class ActivitiylogController extends Controller
 {
@@ -81,21 +82,59 @@ class ActivitiylogController extends Controller
         return back()->with('success', 'activity log deleted successfully');
     }
 
-
+    /**
+     * download all log
+     *
+     * @return
+     */
     public function index()
     {
         $data = ActivityLog::all();
 
-        //https://stackoverflow.com/questions/52940999/how-to-write-to-a-txt-file-in-laravel
-        try {
-            $attemptToWriteText = "Hi";
-            //https://stackoverflow.com/questions/6054033/pretty-printing-json-with-php
-            Storage::put('log.log', json_encode($data, JSON_PRETTY_PRINT));
-            Storage::put('hi.txt', $attemptToWriteText);
-        } catch (\Exception $e) {
-            dd($e);
+        https://stackoverflow.com/questions/52940999/how-to-write-to-a-txt-file-in-laravel
+        // try {
+        $attemptToWriteText = "Hi from plain PHP";
+        //https://stackoverflow.com/questions/6054033/pretty-printing-json-with-php
+
+        //https://stackoverflow.com/questions/14837065/how-to-get-public-directory
+        $myfile = fopen( base_path()."/storage/logs/log.log", "w") or die("Unable to open file!");
+        fwrite($myfile, $data);
+        $myfile = fopen( base_path()."/storage/logs/hi.txt", "w") or die("Unable to open file!");
+        fwrite($myfile, $attemptToWriteText);
+        fclose($myfile);
+
+        // } catch (\Exception $e) {
+        //     dd($e);
+        // }
+
+        unlink(base_path()."/storage/all_logs.zip");
+
+        // $files = array('readme.txt', 'test.html', 'image.gif');
+        $files = array_diff( scandir( base_path()."/storage/logs/"), array('.', '..'));
+        $zipname = base_path()."/storage/all_logs.zip";
+
+        ActivitiylogController::store('/admin/log','GET', json_encode($files));
+
+        $zip = new \ZipArchive;
+
+        if ($zip->open($zipname, \ZipArchive::CREATE) === TRUE) {
+            $tempcount = 0;
+            foreach ($files as $file) {
+                $zip->addFile(base_path()."/storage/logs/".$file , 'all_logs/'.$file ); //add file to the zip archive but put them in '/all_logs' directory of the zip
+                ActivitiylogController::store('/admin/log','GET', '#'.$tempcount++.' '.$file);
+            }
+            $zip->close();
+        } else {
+            ActivitiylogController::store('/admin/log','GET', 'open failed');
         }
-        return Storage::download('log.log');
+
+        // $zip->open($zipname, \ZipArchive::CREATE);
+
+        //https://stackoverflow.com/questions/1754352/download-multiple-files-as-a-zip-file-using-php
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename='."all_logs.zip");
+        header('Content-Length: ' . filesize(base_path()."/storage/all_logs.zip"));
+        readfile(base_path()."/storage/all_logs.zip");
     }
 
     /**
